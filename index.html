@@ -1,0 +1,623 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Glory Event</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            flex-direction: column;
+            background: url("https://iili.io/KcFXTb9.gif") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Token Display */
+        .token-display {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            z-index: 10;
+        }
+        .token-display img {
+            width: 25px;
+            height: 25px;
+        }
+
+        /* User Info Display */
+        .user-info {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            font-size: 12px;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        /* Home Buttons */
+        .home-buttons {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+        .home-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #0066ff, #3399ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+        }
+        .home-btn:hover { transform: translateY(-2px); }
+        .home-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Event Screen */
+        #eventScreen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: url("https://iili.io/KcQhXn4.jpg") no-repeat center center fixed;
+            background-size: cover;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .event-box {
+            max-width: 200px;
+            width: 60%;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .crack-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #0066ff, #3399ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+            position: relative;
+            margin-top: 10px;
+        }
+        .crack-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Back Button with Arrow Icon */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #0066ff, #3399ff);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .back-button:hover { transform: scale(1.1); }
+        .back-button svg { display: block; }
+
+        /* Modal Base */
+        .modal {
+            display: none;
+            position: fixed;
+            top:0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .modal h2 {
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px black;
+        }
+        .modal img {
+            border-radius: 8px;
+            margin: 8px;
+        }
+        .close-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #0066ff, #3399ff);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .close-btn:hover { transform: scale(1.05); }
+
+        /* Reward Modal Special */
+        #rewardModal img {
+            max-width: 120px;
+            width: 100%;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 80%;
+            max-width: 300px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(90deg, #0066ff, #3399ff);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .progress-text {
+            color: white;
+            font-size: 14px;
+            margin-top: 5px;
+            text-shadow: 0 0 3px black;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            z-index: 1000;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #0066ff;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Available Items Display on Event Screen */
+        .available-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+        .available-items img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        /* Diamond Announcement Ticker */
+        .announcement-ticker {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            color: #ffcc00;
+            padding: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            font-weight: bold;
+            text-shadow: 0 0 3px black;
+        }
+        .ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 15s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+    <p>လုပ်ဆောင်နေသည်...</p>
+</div>
+
+<!-- Token Display -->
+<div class="token-display">
+    <img src="https://iili.io/KcQ6uC7.png" alt="Token">
+    <span id="tokenCount">0</span>
+</div>
+
+<!-- User Info Display -->
+<div class="user-info" id="userInfo">
+    <span id="currentUser">အကောင့်: မဝင်ရောက်ရသေး</span>
+</div>
+
+<!-- Home Buttons -->
+<div class="home-buttons" id="homeButtons">
+    <button class="home-btn" id="goEventBtn">ပွဲသို့</button>
+    <button class="home-btn" id="tasksBtn" disabled>လုပ်စရာများ</button>
+</div>
+
+<!-- Event Screen -->
+<div id="eventScreen">
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">အားလုံးဖောက်ထား: 0/31</div>
+    
+    <!-- Available Items Display -->
+    <div class="available-items">
+        <img src="https://iili.io/KcQsIQp.jpg" alt="ကျေးဇူးတင်ပါတယ်">
+        <img src="https://iili.io/KcQLSOG.jpg" alt="လက်မှတ်">
+        <img src="https://iili.io/KcQZYa1.jpg" alt="အပြာရောင်ကတ်">
+        <img src="https://iili.io/KcQtcf2.jpg" alt="Diamonds 5">
+        <img src="https://iili.io/KcQDI1V.jpg" alt="Diamonds 11">
+        <img src="https://iili.io/KcQbunf.jpg" alt="Diamonds 50 + 50">
+    </div>
+    
+    <img src="https://iili.io/KcQNpob.png" alt="Box" class="event-box" id="box">
+    <button class="crack-btn" id="crackBtn">
+        ဖောက်မည်
+    </button>
+    
+    <!-- Diamond Announcement Ticker -->
+    <div class="announcement-ticker" id="announcementTicker">
+        <div class="ticker-content" id="tickerContent">
+            နောက်ဆုံးရ Diamond ပေါက်သူ: မရှိသေးပါ
+        </div>
+    </div>
+    
+    <!-- Back Button with Arrow Icon -->
+    <button class="back-button" id="backBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+        </svg>
+    </button>
+</div>
+
+<!-- Reward Modal -->
+<div class="modal" id="rewardModal">
+    <h2>ရရှိထားသော အရာ</h2>
+    <img src="" alt="Reward" id="rewardImg">
+    <p id="rewardName"></p>
+    <button class="close-btn" id="closeModal">ဟုတ်ပြီ</button>
+</div>
+
+<script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBKLD9Ndp4cB90Xr6tNX9Avb9DFkIqYLIQ",
+        authDomain: "event1-d6df9.firebaseapp.com",
+        databaseURL: "https://event1-d6df9-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "event1-d6df9",
+        storageBucket: "event1-d6df9.appspot.com",
+        messagingSenderId: "873358357160",
+        appId: "1:873358357160:web:ea3605efca783b621a889d"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // DOM
+    const loadingScreen = document.getElementById('loadingScreen');
+    const tokenCount = document.getElementById('tokenCount');
+    const currentUser = document.getElementById('currentUser');
+    const homeButtons = document.getElementById('homeButtons');
+    const eventScreen = document.getElementById('eventScreen');
+    const goEventBtn = document.getElementById('goEventBtn');
+    const tasksBtn = document.getElementById('tasksBtn');
+    const backBtn = document.getElementById('backBtn');
+    const crackBtn = document.getElementById('crackBtn');
+    const rewardModal = document.getElementById('rewardModal');
+    const closeModal = document.getElementById('closeModal');
+    const rewardImg = document.getElementById('rewardImg');
+    const rewardName = document.getElementById('rewardName');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const tickerContent = document.getElementById('tickerContent');
+
+    // Variables
+    let tokens = 0;
+    let crackCount = 0;
+    let currentUsername = "";
+    let userId = "";
+    let isLoggedIn = false;
+    let hasUsedTokens = false;
+
+    // Reward list
+    const rewardList = [
+        {name:"ကျေးဇူးတင်ပါတယ်", img:"https://iili.io/KcQsIQp.jpg"},
+        {name:"လက်မှတ်", img:"https://iili.io/KcQLSOG.jpg"},
+        {name:"အပြာရောင်ကတ်", img:"https://iili.io/KcQZYa1.jpg"},
+        {name:"Diamonds 5", img:"https://iili.io/KcQtcf2.jpg"},
+        {name:"Diamonds 11", img:"https://iili.io/KcQDI1V.jpg"},
+        {name:"Diamonds 50 + 50", img:"https://iili.io/KcQbunf.jpg"}
+    ];
+
+    // Telegram WebApp check
+    function isTelegramWebApp() {
+        return window.Telegram && window.Telegram.WebApp;
+    }
+
+    // Auto Login Function
+    function autoLoginWithTelegram() {
+        if (isTelegramWebApp()) {
+            const tg = window.Telegram.WebApp;
+            tg.expand();
+            const user = tg.initDataUnsafe.user;
+            
+            if (user) {
+                // Auto login successful
+                currentUsername = user.username || `${user.first_name || ''} ${user.last_name || ''}`.trim() || `user_${user.id}`;
+                userId = "tg_" + user.id;
+                isLoggedIn = true;
+                
+                // Hide loading screen and show home buttons
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    homeButtons.style.display = 'flex';
+                    currentUser.textContent = `အကောင့်: ${currentUsername}`;
+                    
+                    // Load user data from Firebase
+                    loadUserData();
+                    listenToDiamondWinners();
+                    listenGlobalCount();
+                }, 1000);
+            } else {
+                // No Telegram user data found
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    showErrorMessage("Telegram အကောင့်ဖြင့် ဝင်ရောက်ရန် လိုအပ်ပါသည်။");
+                }, 1000);
+            }
+        } else {
+            // Not in Telegram WebApp
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                showErrorMessage("ဤဝက်ဘ်ဆိုဒ်ကို Telegram App မှတစ်ဆင့်သာ အသုံးပြုနိုင်ပါသည်။");
+            }, 1000);
+        }
+    }
+
+    // Show error message
+    function showErrorMessage(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'no-tokens-message';
+        errorDiv.style.display = 'block';
+        errorDiv.innerHTML = `
+            <h3>အမှားတစ်ခုဖြစ်နေပါသည်</h3>
+            <p>${message}</p>
+            <p>Telegram App မှတစ်ဆင့် ပြန်လည်ကြိုးစားကြည့်ပါ။</p>
+        `;
+        document.body.appendChild(errorDiv);
+    }
+
+    // Load user data
+    function loadUserData() {
+        const ref = database.ref('users/' + userId);
+        ref.once('value').then(snap => {
+            const data = snap.val();
+            if (data) {
+                // Check if user has already used tokens
+                hasUsedTokens = data.tokensUsed || false;
+                
+                if (hasUsedTokens) {
+                    // User has already used tokens, set to 0
+                    tokens = 0;
+                    crackCount = data.crackCount || 0;
+                } else {
+                    // First time user, give 5 tokens
+                    tokens = 5;
+                    crackCount = 0;
+                    // Mark that tokens have been assigned
+                    saveUserData({ tokensAssigned: true });
+                }
+            } else {
+                // New user, give 5 tokens
+                tokens = 5;
+                crackCount = 0;
+                // Mark that tokens have been assigned
+                saveUserData({ tokensAssigned: true });
+            }
+            updateDisplay();
+        });
+    }
+
+    // Save user data
+    function saveUserData(extra = {}) {
+        database.ref('users/' + userId).set({
+            username: currentUsername,
+            tokens: tokens,
+            crackCount: crackCount,
+            lastUpdated: firebase.database.ServerValue.TIMESTAMP,
+            tokensUsed: hasUsedTokens || tokens === 0, // Mark that tokens have been used
+            ...extra
+        });
+    }
+
+    // Update Display
+    function updateDisplay() {
+        tokenCount.textContent = tokens;
+        
+        // Disable crack button if no tokens or not logged in
+        crackBtn.disabled = tokens <= 0 || !isLoggedIn;
+        
+        const percent = (crackCount / 31) * 100;
+        progressBar.style.width = percent + "%";
+        progressText.textContent = `အားလုံးဖောက်ထား: ${crackCount}/31`;
+    }
+
+    // Get reward
+    function getReward() {
+        crackCount++;
+        if (crackCount === 6) return rewardList[1];
+        if (crackCount === 11) return rewardList[2];
+        if (crackCount === 16) return rewardList[3];
+        if (crackCount === 21) return rewardList[4];
+        if (crackCount === 26) return rewardList[3];
+        if (crackCount === 31) return rewardList[5];
+        return rewardList[0];
+    }
+
+    // Global Counter
+    function listenGlobalCount() {
+        const globalRef = database.ref('global/crackCount');
+        globalRef.on('value', snap => {
+            const total = snap.val() || 0;
+            progressText.textContent = `အားလုံးဖောက်ထား: ${crackCount}/31 | စုစုပေါင်း: ${total}`;
+        });
+    }
+    
+    function increaseGlobalCrackCount() {
+        const globalRef = database.ref('global/crackCount');
+        globalRef.transaction(cur => (cur || 0) + 1);
+    }
+
+    // Diamond Winners Announcement
+    function announceDiamondWinner(username, diamondAmount) {
+        const message = `🎉 ${username} သည် Diamond ${diamondAmount} ရရှိခဲ့သည်! 🎉`;
+        tickerContent.textContent = message;
+        
+        // Save to Firebase for persistence
+        database.ref('lastDiamondWinner').set({
+            username: username,
+            diamondAmount: diamondAmount,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+    }
+    
+    function listenToDiamondWinners() {
+        database.ref('lastDiamondWinner').on('value', snap => {
+            const data = snap.val();
+            if (data) {
+                const message = `🎉 ${data.username} သည် Diamond ${data.diamondAmount} ရရှိခဲ့သည်! 🎉`;
+                tickerContent.textContent = message;
+            }
+        });
+    }
+
+    // Crack button
+    crackBtn.addEventListener('click', () => {
+        if (!isLoggedIn) return;
+        
+        if (tokens > 0 && crackCount < 31) {
+            tokens--;
+            hasUsedTokens = true; // Mark that tokens have been used
+            
+            const reward = getReward();
+            rewardImg.src = reward.img;
+            rewardName.textContent = reward.name;
+            rewardModal.style.display = 'flex';
+            
+            // Check if it's a diamond reward and announce
+            if (reward.name.includes("Diamonds")) {
+                const diamondAmount = reward.name.match(/\d+/g).join(" + ");
+                announceDiamondWinner(currentUsername, diamondAmount);
+            }
+            
+            saveUserData();
+            increaseGlobalCrackCount();
+            updateDisplay();
+        } else if (crackCount >= 31) {
+            alert("ပွဲပြီးဆုံးပါပြီ!");
+        } else {
+            alert("Token မကျန်တော့ပါ!");
+        }
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', ()=> rewardModal.style.display='none');
+    
+    // Navigation
+    goEventBtn.addEventListener('click', ()=>{
+        homeButtons.style.display='none';
+        eventScreen.style.display='flex';
+    });
+    
+    backBtn.addEventListener('click', ()=>{
+        eventScreen.style.display='none';
+        homeButtons.style.display='flex';
+    });
+
+    // Initialize app with auto login
+    function initializeApp() {
+        loadingScreen.style.display = 'flex';
+        setTimeout(() => {
+            autoLoginWithTelegram();
+        }, 500);
+    }
+
+    // Start the app
+    initializeApp();
+</script>
+
+</body>
+</html>
