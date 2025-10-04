@@ -1,0 +1,482 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Arcade Event</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:Arial,sans-serif;overflow:hidden;}
+
+  /* Main Screen */
+  #main-screen{
+    width:100vw;height:100vh;
+    background-image:url('https://iili.io/KVxqxUl.jpg');
+    background-size:cover;background-position:center;
+    position:relative;
+  }
+
+  /* Token & Coin Bubble */
+  .token-card{
+    position:absolute;top:10px;left:10px;
+    min-width:80px;height:40px;
+    background:black;border-radius:20px;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 10px;color:white;font-weight:bold;font-size:14px;
+    gap:5px;
+  }
+  .token-card img{width:30px;height:auto;}
+  .token-card .count{color:white;font-weight:bold;font-size:14px;}
+
+  /* Buttons */
+  .buttons{
+    position:absolute;top:50%;right:10px;
+    transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .btn{padding:6px 12px;font-size:13px;border:none;border-radius:6px;background:#007bff;color:white;cursor:pointer;transition:0.3s;}
+  .btn:hover{background:#0056b3;}
+
+  /* Event Screen */
+  #event-screen{
+    display:none;width:100vw;height:100vh;
+    background-image:url('https://iili.io/KVxEWib.jpg');
+    background-size:cover;background-position:center;
+    position:relative;
+  }
+
+  .event-box{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:180px;height:180px;
+    background-image:url('https://iili.io/KVz8LZJ.png');
+    background-size:contain;background-repeat:no-repeat;
+    background-position:center;
+    z-index:5;
+  }
+
+  #screen2-gif{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    display:none;background-size:cover;background-position:center;
+    z-index:10;
+  }
+
+  .open-btn{
+    position:absolute;bottom:80px;left:50%;
+    transform:translateX(-50%);
+    padding:12px 24px;font-size:16px;border:none;border-radius:8px;background:#007bff;color:white;cursor:pointer;transition:0.3s;
+    z-index:5;
+  }
+  .open-btn:hover{background:#0056b3;}
+
+  .back-btn{
+    position:absolute;top:20px;left:20px;
+    padding:8px 16px;font-size:14px;border:none;border-radius:6px;background:#007bff;color:white;
+    cursor:pointer;display:flex;align-items:center; z-index:5;
+  }
+  .back-btn:hover{background:#0056b3;}
+  .back-btn::before{content:'←';margin-right:6px;font-size:16px;}
+
+  .reward-popup{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    display:none;flex-direction:column;align-items:center;
+    background:rgba(0,0,0,0.7);padding:20px;border-radius:12px;
+    color:white;font-size:18px;font-weight:bold;text-align:center;
+    z-index:20;
+  }
+  .reward-popup img{width:80px;height:80px;margin-bottom:10px;}
+  .reward-popup .close-btn{
+    margin-top:10px;padding:6px 12px;font-size:14px;border:none;border-radius:6px;background:#007bff;color:white;cursor:pointer;
+  }
+  .reward-popup .close-btn:hover{background:#0056b3;}
+
+  /* Exchange Screen */
+  #exchange-screen{
+    display:none;width:100vw;height:100vh;
+    background-image:url('https://iili.io/KViEFkX.jpg');
+    background-size:cover;background-position:center;
+    position:relative;color:white;
+  }
+  .exchange-cards{
+    display:grid;grid-template-columns:1fr 1fr;gap:20px;
+    padding:20px;justify-items:center;
+    margin-top:60px;
+  }
+  .exchange-card{
+    background:rgba(0,0,0,0.7);border-radius:12px;padding:10px;width:150px;text-align:center;
+  }
+  .exchange-card img{width:100%;border-radius:8px;}
+  .exchange-card p{margin:8px 0;font-size:14px;}
+  
+  /* Task Screen */
+  #task-screen{
+    display:none;width:100vw;height:100vh;
+    background:#222;position:relative;color:white;
+    padding:20px;
+  }
+  .task-list{
+    margin-top:60px;
+    display:flex;flex-direction:column;gap:15px;
+  }
+  .task-item{
+    background:#333;padding:15px;border-radius:8px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .task-info h3{margin-bottom:5px;}
+  .task-info p{font-size:14px;color:#aaa;}
+  
+  /* Exchange Form */
+  .exchange-form{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.8);padding:20px;border-radius:12px;
+    color:white;width:300px;display:none;z-index:20;
+  }
+  .exchange-form h3{text-align:center;margin-bottom:15px;}
+  .form-group{margin-bottom:15px;}
+  .form-group label{display:block;margin-bottom:5px;font-size:14px;}
+  .form-group input{width:100%;padding:8px;border-radius:4px;border:none;}
+  .form-buttons{display:flex;gap:10px;justify-content:center;}
+  .form-buttons button{padding:8px 16px;border:none;border-radius:4px;cursor:pointer;}
+  .confirm-btn{background:#28a745;color:white;}
+  .cancel-btn{background:#dc3545;color:white;}
+  
+  /* Telegram Success Message */
+  .telegram-success{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.8);padding:20px;border-radius:12px;
+    color:white;text-align:center;display:none;z-index:30;
+  }
+  .telegram-success h3{color:#28a745;margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<!-- Main Screen -->
+<div id="main-screen">
+  <div class="token-card">
+    <img src="https://iili.io/KVxjsG1.png" alt="Token">
+    <div class="count" id="token-count">10</div>
+    <img src="https://iili.io/KVzp01S.png" alt="Coin">
+    <div class="count" id="coin-count">0</div>
+  </div>
+
+  <div class="buttons">
+    <button class="btn" id="event-btn">Event</button>
+    <button class="btn" id="task-btn">Task လုပ်မည်</button>
+    <button class="btn" id="exchange-btn">လဲလှည်မည်</button>
+  </div>
+</div>
+
+<!-- Event Screen -->
+<div id="event-screen">
+  <div class="event-box" id="event-box"></div>
+  <div id="screen2-gif" style="background-image:url('https://iili.io/KVISLp1.gif');"></div>
+  <button class="open-btn" id="open-btn">ဖောက်မည်</button>
+  <button class="back-btn" id="back-btn">Home</button>
+  <div class="reward-popup" id="reward-popup">
+    <img src="" alt="Reward" id="reward-img">
+    <div id="reward-text"></div>
+    <button class="close-btn" id="close-reward">ဟုတ်ပြီ</button>
+  </div>
+</div>
+
+<!-- Task Screen -->
+<div id="task-screen">
+  <button class="back-btn" id="back-task">Home</button>
+  <h2 style="text-align:center;margin-top:20px;">Task လုပ်မည်</h2>
+  <div class="task-list">
+    <div class="task-item">
+      <div class="task-info">
+        <h3>Facebook Like</h3>
+        <p>Facebook Page ကို Like လုပ်ပါ</p>
+      </div>
+      <button class="btn">လုပ်မည်</button>
+    </div>
+    <div class="task-item">
+      <div class="task-info">
+        <h3>Video ကြည့်ပါ</h3>
+        <p>30 စက္ကန့် Video ကြည့်ပါ</p>
+      </div>
+      <button class="btn">လုပ်မည်</button>
+    </div>
+    <div class="task-item">
+      <div class="task-info">
+        <h3>App Download</h3>
+        <p>App ကို Download လုပ်ပါ</p>
+      </div>
+      <button class="btn">လုပ်မည်</button>
+    </div>
+  </div>
+</div>
+
+<!-- Exchange Screen -->
+<div id="exchange-screen">
+  <button class="back-btn" id="back-exchange">Home</button>
+  <h2 style="text-align:center;margin-top:20px;">လဲလှည်မည်</h2>
+  <div class="exchange-cards">
+    <div class="exchange-card">
+      <img src="https://iili.io/KGldYUG.jpg">
+      <p>5 Diamond - 650 Coins</p>
+      <button class="btn exchange-item" data-diamond="5" data-coins="650">လဲမည်</button>
+    </div>
+    <div class="exchange-card">
+      <img src="https://iili.io/KGlFqle.jpg">
+      <p>11 Diamond - 1500 Coins</p>
+      <button class="btn exchange-item" data-diamond="11" data-coins="1500">လဲမည်</button>
+    </div>
+    <div class="exchange-card">
+      <img src="https://iili.io/KGlfSK7.jpg">
+      <p>50 + 50 Diamond - 3500 Coins</p>
+      <button class="btn exchange-item" data-diamond="100" data-coins="3500">လဲမည်</button>
+    </div>
+  </div>
+</div>
+
+<!-- Exchange Form -->
+<div class="exchange-form" id="exchange-form">
+  <h3>လဲလှည်မည်</h3>
+  <div class="form-group">
+    <label for="game-id">Game ID</label>
+    <input type="text" id="game-id" placeholder="သင့် Game ID ထည့်ပါ">
+  </div>
+  <div class="form-group">
+    <label for="server-id">Server ID</label>
+    <input type="text" id="server-id" placeholder="သင့် Server ID ထည့်ပါ">
+  </div>
+  <div class="form-group">
+    <p id="exchange-details">5 Diamond အတွက် 650 Coins လိုအပ်ပါသည်</p>
+  </div>
+  <div class="form-buttons">
+    <button class="confirm-btn" id="confirm-exchange">အတည်ပြုမည်</button>
+    <button class="cancel-btn" id="cancel-exchange">မလဲတော့ပါ</button>
+  </div>
+</div>
+
+<!-- Telegram Success Message -->
+<div class="telegram-success" id="telegram-success">
+  <h3>လဲလှည်မှု အောင်မြင်ပါသည်!</h3>
+  <p>သင့်ရဲ့ လဲလှည်မှုအချက်အလက်များကို Telegram သို့ပို့ပြီးဖြစ်သည်။</p>
+  <p>ကျေးဇူးပြု၍ စောင့်ဆိုင်းပေးပါ။</p>
+  <button class="btn" id="close-success" style="margin-top:15px;">ဟုတ်ပြီ</button>
+</div>
+
+<script>
+  // Load data from localStorage when page loads
+  function loadData() {
+    const savedTokens = localStorage.getItem('starArcadeTokens');
+    const savedCoins = localStorage.getItem('starArcadeCoins');
+    
+    tokens = savedTokens ? parseInt(savedTokens) : 10;
+    coins = savedCoins ? parseInt(savedCoins) : 0;
+    
+    tokenCountElem.textContent = tokens;
+    coinCountElem.textContent = coins;
+  }
+  
+  // Save data to localStorage
+  function saveData() {
+    localStorage.setItem('starArcadeTokens', tokens);
+    localStorage.setItem('starArcadeCoins', coins);
+  }
+
+  const eventBtn = document.getElementById('event-btn');
+  const exchangeBtn = document.getElementById('exchange-btn');
+  const taskBtn = document.getElementById('task-btn');
+  const mainScreen = document.getElementById('main-screen');
+  const eventScreen = document.getElementById('event-screen');
+  const exchangeScreen = document.getElementById('exchange-screen');
+  const taskScreen = document.getElementById('task-screen');
+  const openBtn = document.getElementById('open-btn');
+  const backBtn = document.getElementById('back-btn');
+  const backExchange = document.getElementById('back-exchange');
+  const backTask = document.getElementById('back-task');
+  const tokenCountElem = document.getElementById('token-count');
+  const coinCountElem = document.getElementById('coin-count');
+  const rewardPopup = document.getElementById('reward-popup');
+  const rewardImg = document.getElementById('reward-img');
+  const rewardText = document.getElementById('reward-text');
+  const screen2Gif = document.getElementById('screen2-gif');
+  const exchangeForm = document.getElementById('exchange-form');
+  const telegramSuccess = document.getElementById('telegram-success');
+  const gameIdInput = document.getElementById('game-id');
+  const serverIdInput = document.getElementById('server-id');
+  const exchangeDetails = document.getElementById('exchange-details');
+  const confirmExchange = document.getElementById('confirm-exchange');
+  const cancelExchange = document.getElementById('cancel-exchange');
+  const closeSuccess = document.getElementById('close-success');
+
+  let tokens = 10;
+  let coins = 0;
+  let currentExchange = null;
+
+  const rewards = [
+    {value:10, chance:80, img:'https://iili.io/KVzp01S.png'},
+    {value:20, chance:70, img:'https://iili.io/KVzp01S.png'},
+    {value:30, chance:60, img:'https://iili.io/KVzp01S.png'},
+    {value:50, chance:50, img:'https://iili.io/KVzp01S.png'},
+    {value:70, chance:40, img:'https://iili.io/KVzp01S.png'},
+    {value:100,chance:10, img:'https://iili.io/KVzp01S.png'}
+  ];
+
+  // Load data when page loads
+  loadData();
+
+  // Screen Navigation
+  eventBtn.addEventListener('click', ()=>{
+    mainScreen.style.display='none';
+    eventScreen.style.display='block';
+  });
+
+  taskBtn.addEventListener('click', ()=>{
+    mainScreen.style.display='none';
+    taskScreen.style.display='block';
+  });
+
+  exchangeBtn.addEventListener('click', ()=>{
+    mainScreen.style.display='none';
+    exchangeScreen.style.display='block';
+  });
+
+  backBtn.addEventListener('click', ()=>{
+    eventScreen.style.display='none';
+    mainScreen.style.display='block';
+  });
+
+  backTask.addEventListener('click', ()=>{
+    taskScreen.style.display='none';
+    mainScreen.style.display='block';
+  });
+
+  backExchange.addEventListener('click', ()=>{
+    exchangeScreen.style.display='none';
+    mainScreen.style.display='block';
+  });
+
+  // Event Box Opening
+  function getReward(){
+    const totalChance = rewards.reduce((sum,r)=>sum+r.chance,0);
+    let rand = Math.random()*totalChance;
+    for(let r of rewards){
+      if(rand < r.chance) return r;
+      rand -= r.chance;
+    }
+    return rewards[0];
+  }
+
+  openBtn.addEventListener('click', ()=>{
+    if(tokens<=0){alert('Token မလုံလောက်ပါ!');return;}
+    tokens--; 
+    tokenCountElem.textContent = tokens;
+    saveData(); // Save after token is used
+    
+    screen2Gif.style.display = 'block';
+    setTimeout(()=>{
+      screen2Gif.style.display = 'none';
+      const reward = getReward();
+      coins += reward.value;
+      coinCountElem.textContent = coins;
+      rewardImg.src = reward.img;
+      rewardText.textContent = `+${reward.value} Coin`;
+      rewardPopup.style.display='flex';
+      
+      saveData(); // Save after coins are added
+    },2000);
+  });
+
+  document.getElementById('close-reward').addEventListener('click', ()=>{
+    rewardPopup.style.display='none';
+  });
+
+  // Exchange System
+  document.querySelectorAll('.exchange-item').forEach(button => {
+    button.addEventListener('click', function() {
+      const diamond = this.getAttribute('data-diamond');
+      const coinCost = this.getAttribute('data-coins');
+      
+      if(coins < coinCost) {
+        alert('Coin မလုံလောက်ပါ!');
+        return;
+      }
+      
+      currentExchange = {diamond, coinCost};
+      exchangeDetails.textContent = `${diamond} Diamond အတွက် ${coinCost} Coins လိုအပ်ပါသည်`;
+      exchangeForm.style.display = 'block';
+    });
+  });
+
+  cancelExchange.addEventListener('click', () => {
+    exchangeForm.style.display = 'none';
+    currentExchange = null;
+  });
+
+  confirmExchange.addEventListener('click', () => {
+    const gameId = gameIdInput.value.trim();
+    const serverId = serverIdInput.value.trim();
+    
+    if(!gameId || !serverId) {
+      alert('Game ID နှင့် Server ID ထည့်သွင်းပေးပါ!');
+      return;
+    }
+    
+    // Deduct coins
+    coins -= parseInt(currentExchange.coinCost);
+    coinCountElem.textContent = coins;
+    
+    // Save data after coins are deducted
+    saveData();
+    
+    // Send to Telegram
+    sendToTelegram(gameId, serverId, currentExchange.diamond, currentExchange.coinCost);
+    
+    // Show success message
+    exchangeForm.style.display = 'none';
+    telegramSuccess.style.display = 'block';
+    
+    // Reset form
+    gameIdInput.value = '';
+    serverIdInput.value = '';
+    currentExchange = null;
+  });
+
+  closeSuccess.addEventListener('click', () => {
+    telegramSuccess.style.display = 'none';
+  });
+
+  // Telegram Integration
+  function sendToTelegram(gameId, serverId, diamond, coinCost) {
+    const botToken = '8094270595:AAERziCUrOYf38DMOSReu1oOSEf2LLG_qS0';
+    const chatId = '@WinnerEvent';
+    
+    const message = `🔄 လဲလှည်မှုအသစ်
+🎮 Game ID: ${gameId}
+🖥️ Server ID: ${serverId}
+💎 Diamond: ${diamond}
+🪙 Coins: ${coinCost}
+⏰ အချိန်: ${new Date().toLocaleString()}`;
+    
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Telegram message sent:', data);
+    })
+    .catch(error => {
+      console.error('Error sending to Telegram:', error);
+    });
+  }
+</script>
+</body>
+</html>
