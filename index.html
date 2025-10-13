@@ -1,0 +1,237 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlar Company Event</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a1a3a, #1a3a6a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* ကြယ်များအတွက် style */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+        
+        @keyframes twinkle {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 95%;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #a8e6cf;
+            font-weight: 300;
+        }
+        
+        .message-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #4CAF50;
+            text-align: left;
+        }
+        
+        .message-box h2 {
+            color: #4CAF50;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+        
+        .message-box p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .highlight {
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.6);
+        }
+        
+        .footer {
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Android အတွက် ထိရောက်သော ဒီဇိုင်း */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .message-box {
+                padding: 15px;
+            }
+            
+            .message-box h2 {
+                font-size: 1.2rem;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="starsContainer"></div>
+    
+    <div class="container">
+        <h1>Starlar Company Event</h1>
+        <p class="subtitle">အတည်ပြုထုတ်ပြန်ချက်</p>
+        
+        <div class="message-box">
+            <h2>ကျေးဇူးတင်ပါတယ်!</h2>
+            <p>ကျွန်တော်တို့ရဲ့ <span class="highlight">အစမ်း Event</span> ဟာ အမှန်တစ်ကယ် အောင်မြင်စွာ ပေါက်သွားခဲ့ပါတယ်။</p>
+            <p>ယခုအချိန်တွင် <span class="highlight">အတည် Version</span> ကို ထုတ်ခဲ့ပါပြီ။</p>
+            <p>ယခင် ရရှိထားသော အရာများ <span class="highlight">ပျောက်သွားမှာမဟုတ်ပါ</span>။</p>
+        </div>
+        
+        <p>အောက်ပါလင့်ခ်ကို နှိပ်ပြီး ဆက်လက်အသုံးပြုနိုင်ပါပြီ။</p>
+        
+        <a href="https://t.me/MoontonCompamyMM/4142" class="cta-button">အခု အသုံးပြုရန်</a>
+        
+        <div class="footer">
+            Starlar Company © 2025 - ကျေးဇူးတင်လျှက်
+        </div>
+    </div>
+
+    <script>
+        // ကြယ်များဖန်တီးရန် JavaScript
+        function createStars() {
+            const starsContainer = document.getElementById('starsContainer');
+            const starCount = 100; // ကြယ်အရေအတွက်
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // ကြယ်၏ အရွယ်အစား
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // ကြယ်၏ နေရာ
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                
+                // ကြယ်၏ အရှိန်
+                const duration = Math.random() * 5 + 3;
+                star.style.animationDuration = `${duration}s`;
+                
+                // ကြယ်၏ နောက်ကျမှု
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // စာမျက်နှာ load ပြီးတာနဲ့ ကြယ်များဖန်တီးရန်
+        window.addEventListener('load', createStars);
+        
+        // Android အတွက် ထိရောက်သော ခလုတ်နှိပ်ခြင်း
+        document.querySelector('.cta-button').addEventListener('touchstart', function() {
+            this.style.transform = 'translateY(-3px)';
+        });
+        
+        document.querySelector('.cta-button').addEventListener('touchend', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    </script>
+</body>
+</html>
