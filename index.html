@@ -2557,21 +2557,22 @@ body {
 
 
 <!-- Server Selection Screen -->
-<div id="server-selection-screen" style="display: none; width: 100vw; height: 100vh; background-image: url('https://iili.io/KOZNH0J.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; z-index: 1000; overflow-y: auto; color: white; padding: 20px;">
+<div id="server-selection-screen" style="display: none; width: 100vw; height: 100vh; background-image: url('https://iili.io/KOZNH0J.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: fixed; top: 0; left: 0; z-index: 1000; overflow: hidden; color: white;">
   <button class="back-btn" id="back-server-selection">Home</button>
   
-  <div style="display: flex; flex-direction: column; align-items: center; justify-content: flex-start; height: 100%; text-align: center; padding-top: 50px;">
-    
-    <!-- Header Section (အပေါ်မှာအသေထား) -->
-    <div style="margin-bottom: 40px;">
-      <h2 style="font-size: 32px; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Select Server</h2>
-      <p style="font-size: 16px; opacity: 0.8; margin-bottom: 40px;">သင်ကြည့်မဲ့ Server ရွေးပါ</p>
-    </div>
+  <!-- Fixed Header (အပေါ်မှာအသေထား) -->
+  <div style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 20px; text-align: center; z-index: 10;">
+    <h2 style="font-size: 32px; margin-bottom: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Select Server</h2>
+    <p style="font-size: 16px; opacity: 0.8;">သင်ကြည့်မဲ့ Server ရွေးပါ</p>
+  </div>
 
-    <!-- Server Grid (အောက်ကိုရွေ့) -->
-    <div class="server-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 400px; width: 100%; margin-top: auto; margin-bottom: 100px;">
+  <!-- Scrollable Content Area (အလယ်ပိုင်းပဲ scroll ဖြစ်) -->
+  <div style="position: absolute; top: 120px; bottom: 80px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; overflow-y: auto; padding: 10px;">
+    
+    <!-- Server Grid -->
+    <div class="server-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
       <!-- Server 1 -->
-      <div class="server-card" data-server="server1" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server1" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #90ee90;">Server 1</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
@@ -2579,7 +2580,7 @@ body {
       </div>
       
       <!-- Server 2 -->
-      <div class="server-card" data-server="server2" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server2" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #ff6b6b;">Server 2</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
@@ -2587,7 +2588,7 @@ body {
       </div>
       
       <!-- Server 3 -->
-      <div class="server-card" data-server="server3" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server3" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #ff6b6b;">Server 3</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
@@ -2595,7 +2596,7 @@ body {
       </div>
       
       <!-- Server 4 -->
-      <div class="server-card" data-server="server4" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server4" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #90ee90;">Server 4</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
@@ -2603,7 +2604,7 @@ body {
       </div>
 
       <!-- Server 5 -->
-      <div class="server-card" data-server="server5" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server5" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #90ee90;">Server 5</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
@@ -2611,20 +2612,20 @@ body {
       </div>
 
       <!-- Server 6 -->
-      <div class="server-card" data-server="server6" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
+      <div class="server-card" data-server="server6" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease; border: 2px solid rgba(255,255,255,0.3); text-align: center;">
         <div style="font-size: 24px; margin-bottom: 10px;">🟢</div>
         <h3 style="font-size: 20px; margin-bottom: 8px; color: #ff6b6b;">Server 6</h3>
         <p style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">Rank ကြည့်မည်</p>
         <div style="font-size: 11px; color: #ffcc00;">Users: <span id="server6-count">Loading...</span></div>
       </div>
     </div>
+  </div>
 
-    <!-- Note Section (အောက်ဆုံးမှာ) -->
-    <div style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; max-width: 400px; margin-bottom: 30px;">
-      <p style="font-size: 12px; color: #ffcc00; margin: 0;">
-        💡 <strong>Note:</strong> သင့် Server ကိုသိရန် Account Profile ထဲကြည့်ပါ.
-      </p>
-    </div>
+  <!-- Fixed Footer (အောက်မှာအသေထား) -->
+  <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(0,0,0,0.7); padding: 15px; text-align: center; z-index: 10;">
+    <p style="font-size: 12px; color: #ffcc00; margin: 0;">
+      💡 <strong>Note:</strong> သင့် Server ကိုသိရန် Account Profile ထဲကြည့်ပါ.
+    </p>
   </div>
 </div>
 <!-- Rank Screen -->
