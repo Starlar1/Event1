@@ -5468,17 +5468,25 @@ function clearRankData() {
   console.log('Rank data cleared completely');
 }
 
-// Load server user counts
+// Load server user counts - FIXED VERSION
 async function loadServerUserCounts() {
   try {
     const serverElements = {
       'server1': document.getElementById('server1-count'),
       'server2': document.getElementById('server2-count'),
       'server3': document.getElementById('server3-count'),
-      'server4': document.getElementById('server4-count')
+      'server4': document.getElementById('server4-count'),
+      'server5': document.getElementById('server5-count'), // ✅ ADD THIS
+      'server6': document.getElementById('server6-count')  // ✅ ADD THIS
     };
 
     for (const [serverId, element] of Object.entries(serverElements)) {
+      // Check if element exists
+      if (!element) {
+        console.error(`Element not found for ${serverId}`);
+        continue;
+      }
+      
       try {
         const tempSupabase = window.supabase.createClient(
           SUPABASE_SERVERS[serverId].url, 
@@ -5505,10 +5513,10 @@ async function loadServerUserCounts() {
           const statusText = serverCard.querySelector('p');
           
           if (isFull) {
-            statusIcon.textContent = '🟢';
-            statusText.innerHTML = '<span style="color: #ff6b6b;">Rank ကြည့်မည်</span>';
+            statusIcon.textContent = '🔴'; // Full server - red
+            statusText.innerHTML = '<span style="color: #ff6b6b;">Full</span>';
           } else {
-            statusIcon.textContent = '🟢';
+            statusIcon.textContent = '🟢'; // Available server - green
             statusText.innerHTML = '<span style="color: #90ee90;">Rank ကြည့်မည်</span>';
           }
         }
