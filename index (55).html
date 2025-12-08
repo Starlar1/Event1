@@ -2350,39 +2350,20 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Gold pulse animation */
-@keyframes pulseGold {
-  0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
-  50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
-  100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); }
+.sidebar-btn.event-btn-gold {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  border: 1px solid rgba(255, 223, 0, 0.8);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+  animation: goldGlow 3s infinite alternate;
+  color: #000;
+  font-weight: bold;
+  padding: 10px 15px;
 }
 
-/* Floating triangles animation */
-@keyframes floatTriangle {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) rotate(180deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(0) rotate(360deg);
-    opacity: 0.3;
-  }
+@keyframes goldGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
 }
-
-/* Triangle element */
-.triangle {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  background: white;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  opacity: 0.3;
-  animation: floatTriangle 4s infinite ease-in-out;
-  }
 
 </style>
 </head>
@@ -2515,45 +2496,33 @@ body {
   </div>
 </div>
 
-<!-- Event Feature Screen -->
-<div id="event-feature-screen" style="display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; background: linear-gradient(135deg, #1a2980, #26d0ce); overflow: hidden;">
+<div id="events-screen">
+  
+  <div style="background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);">
+    
+    <div style="background: rgba(0, 0, 0, 0.6); border-bottom: 2px solid #ffd700;">
+      <button id="back-events">← Home</button>
+      <div style="color: #ffd700;">Event များ</div>
+      <div></div>
+    </div>
 
-  <!-- Back Button -->
-  <button class="back-btn" id="back-event-feature" style="position: absolute; top: 20px; left: 20px; z-index: 1001;">Home</button>
-  
-  <!-- Header -->
-  <div style="position: absolute; top: 20%; left: 50%; transform: translateX(-50%); text-align: center; color: white; z-index: 1001;">
-    <h1 style="font-size: 32px; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">Event များ</h1>
-    <p style="font-size: 16px; opacity: 0.9;">အထူးပြုလုပ်ထားသော Event များကို ကြည့်ရှုရန်</p>
-  </div>
-  
-  <!-- Floating Triangles Background -->
-  <div id="triangles-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-  
-  <!-- Event Buttons Container -->
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; z-index: 1001;">
-    
-    <!-- Event Button 1 -->
-    <div class="event-feature-btn" data-event="1" style="width: 120px; height: 120px; cursor: pointer; transition: transform 0.3s ease;">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-           alt="Event 1" 
-           style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 3px solid rgba(255,255,255,0.5);">
+    <div id="events-content-area">
+      <!-- Event 1 -->
+      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 1" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+      </div>
+
+      <!-- Event 2 -->
+      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 2" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+      </div>
+
+      <!-- Event 3 -->
+      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 3" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
+      </div>
     </div>
-    
-    <!-- Event Button 2 -->
-    <div class="event-feature-btn" data-event="2" style="width: 120px; height: 120px; cursor: pointer; transition: transform 0.3s ease;">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-           alt="Event 2" 
-           style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 3px solid rgba(255,255,255,0.5);">
-    </div>
-    
-    <!-- Event Button 3 -->
-    <div class="event-feature-btn" data-event="3" style="width: 120px; height: 120px; cursor: pointer; transition: transform 0.3s ease;">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-           alt="Event 3" 
-           style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px; border: 3px solid rgba(255,255,255,0.5);">
-    </div>
-    
+
   </div>
 </div>
 
@@ -9847,7 +9816,19 @@ eventFeatureBtns.forEach(btn => {
   });
 });
         
+const eventsBtn = document.getElementById('events-btn');
+const eventsScreen = document.getElementById('events-screen');
+const backEvents = document.getElementById('back-events');
 
+eventsBtn.addEventListener('click', () => {
+  document.getElementById('main-screen').style.display = 'none';
+  eventsScreen.style.display = 'block';
+});
+
+backEvents.addEventListener('click', () => {
+  eventsScreen.style.display = 'none';
+  document.getElementById('main-screen').style.display = 'block';
+});
       
           
     
