@@ -9754,67 +9754,7 @@ if (typeof saveUserData !== 'undefined') {
     };
 }
 
-// DOM Elements
-const eventFeatureBtn = document.getElementById('event-feature-btn');
-const eventFeatureScreen = document.getElementById('event-feature-screen');
-const backEventFeature = document.getElementById('back-event-feature');
-const trianglesContainer = document.getElementById('triangles-container');
-const eventFeatureBtns = document.querySelectorAll('.event-feature-btn');
 
-// Create floating triangles
-function createFloatingTriangles() {
-  trianglesContainer.innerHTML = '';
-  const triangleCount = 20;
-  
-  for (let i = 0; i < triangleCount; i++) {
-    const triangle = document.createElement('div');
-    triangle.className = 'triangle';
-    
-    // Random position
-    const left = Math.random() * 100;
-    const top = Math.random() * 100;
-    const size = 20 + Math.random() * 40;
-    const delay = Math.random() * 5;
-    const duration = 3 + Math.random() * 4;
-    
-    triangle.style.left = `${left}%`;
-    triangle.style.top = `${top}%`;
-    triangle.style.width = `${size}px`;
-    triangle.style.height = `${size}px`;
-    triangle.style.animationDelay = `${delay}s`;
-    triangle.style.animationDuration = `${duration}s`;
-    
-    trianglesContainer.appendChild(triangle);
-  }
-}
-
-// Navigation
-eventFeatureBtn.addEventListener('click', () => {
-  mainScreen.style.display = 'none';
-  eventFeatureScreen.style.display = 'block';
-  createFloatingTriangles();
-});
-
-backEventFeature.addEventListener('click', () => {
-  eventFeatureScreen.style.display = 'none';
-  mainScreen.style.display = 'block';
-});
-
-// Event button hover effects
-eventFeatureBtns.forEach(btn => {
-  btn.addEventListener('mouseenter', () => {
-    btn.style.transform = 'scale(1.1) rotate(5deg)';
-  });
-  
-  btn.addEventListener('mouseleave', () => {
-    btn.style.transform = 'scale(1) rotate(0deg)';
-  });
-  
-  btn.addEventListener('click', function() {
-    const eventNum = this.getAttribute('data-event');
-    alert(`Event ${eventNum} ကိုနှိပ်လိုက်ပါတယ်။\n\nဤနေရာတွင် သင့်ရဲ့ Event Logic ကိုထည့်သွင်းနိုင်ပါသည်။`);
-  });
-});
         
 const eventsBtn = document.getElementById('events-btn');
 const eventsScreen = document.getElementById('events-screen');
