@@ -9866,87 +9866,27 @@ if (typeof saveUserData !== 'undefined') {
 }
 
 
-   // Elements
-    const sidebarMenu = document.getElementById('sidebar-menu');
-    const sidebarToggle = document.getElementById('sidebar-toggle');
-    const eventOpenBtn = document.getElementById('event-open-btn');
-    const eventScreen = document.getElementById('event-screen');
-    const eventBack = document.getElementById('event-back');
-    const eventOverlay = document.getElementById('event-overlay');
-    const eventStatus = document.getElementById('event-status');
+   
+  // ===== EVENT SCREEN TOGGLE =====
+const eventBtn = document.getElementById('event-btn');
+const eventScreen = document.getElementById('event-screen');
+const eventBack = document.getElementById('event-back');
 
-    // Sidebar toggle (expand / collapse)
-    sidebarToggle.addEventListener('click', () => {
-      sidebarMenu.classList.toggle('expanded');
-    });
+if (eventBtn && eventScreen && eventBack) {
+  // Event Button ကိုနှိပ်ရင် Event Screen ပေါ်မယ်
+  eventBtn.addEventListener('click', () => {
+    document.getElementById('main-screen').style.display = 'none';
+    eventScreen.style.display = 'block';
+  });
 
-    // Open event screen
-    function openEventScreen() {
-      eventScreen.classList.add('open');
-      eventScreen.setAttribute('aria-hidden','false');
-      eventStatus.textContent = 'Event screen open';
-      // trap focus to back button for accessibility
-      eventBack.focus();
-      // disable page scroll when open
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Close event screen
-    function closeEventScreen() {
-      eventScreen.classList.remove('open');
-      eventScreen.setAttribute('aria-hidden','true');
-      eventStatus.textContent = 'Event screen closed';
-      document.body.style.overflow = '';
-      // return focus to event button
-      eventOpenBtn.focus({preventScroll:true});
-    }
-
-    eventOpenBtn.addEventListener('click', openEventScreen);
-    eventBack.addEventListener('click', closeEventScreen);
-
-    // Click outside panel (overlay) closes screen
-    eventOverlay.addEventListener('click', closeEventScreen);
-
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && eventScreen.classList.contains('open')) {
-        closeEventScreen();
-      }
-    });
-
-    // Prevent clicks inside panel from closing
-    const panel = document.querySelector('.event-panel');
-    panel.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-
-    // Ensure overlay click closes only when clicking outside the panel (for safety)
-    eventScreen.addEventListener('click', (e) => {
-      if (e.target === eventScreen) closeEventScreen();
-    });
-
-    // Accessibility: focus trap minimal (keeps focus within dialog)
-    panel.addEventListener('keydown', (e) => {
-      if (e.key === 'Tab') {
-        const focusable = panel.querySelectorAll('button,a,input,textarea,select,[tabindex]:not([tabindex="-1"])');
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault(); last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault(); first.focus();
-        }
-      }
-    });
-
-    // Optional: keyboard focus back to event button when closing using other means
-    // (already handled in closeEventScreen)
-
-    // Small enhancement: lazy load images for performance
-    document.querySelectorAll('.img-wrap img').forEach(img => {
-      img.loading = 'lazy';
-    });
+  // Back Button ကိုနှိပ်ရင် Main Screen ပြန်ပေါ်မယ်
+  eventBack.addEventListener('click', () => {
+    eventScreen.style.display = 'none';
+    document.getElementById('main-screen').style.display = 'block';
+  });
+} else {
+  console.log('Event screen elements not found');
+}      
     
     
   
