@@ -2411,7 +2411,7 @@ body {
 #events-btn {
   background: linear-gradient(145deg, #FFD700, #FFA500, #FFD700) !important;
   border: 2px solid #FFD700 !important;
-  color: white !important; /* အဖြူရောင် */
+  color: white !important;
   font-weight: bold !important;
   text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
   box-shadow: 
@@ -2422,7 +2422,8 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transform: translateX(0) !important; /* မလှုပ် */
+  transform: translateX(0) !important;
+  transition: all 0.3s ease !important;
 }
 
 /* Color Pulse Animation Only */
@@ -2444,7 +2445,11 @@ body {
 /* Hover Effect - Color Only */
 #events-btn:hover {
   animation: colorPulseFast 0.8s ease-in-out infinite !important;
-  transform: scale(1.05) !important; /* Scale only, no movement */
+  transform: scale(1.05) !important;
+  box-shadow: 
+    0 0 30px rgba(255, 215, 0, 0.9),
+    0 0 60px rgba(255, 215, 0, 0.7),
+    inset 0 0 25px rgba(255, 255, 255, 0.9) !important;
 }
 
 @keyframes colorPulseFast {
@@ -2462,14 +2467,13 @@ body {
   }
 }
 
-/* Remove all movement animations */
-#events-btn::before {
-  display: none; /* ရွှေရောင်လိုင်းဖျောက် */
-}
-
-/* Active state - no movement */
+/* Active state */
 #events-btn:active {
-  transform: scale(0.98) !important; /* Scale only */
+  transform: scale(0.98) !important;
+  box-shadow: 
+    0 0 40px rgba(255, 215, 0, 1),
+    0 0 80px rgba(255, 215, 0, 0.8),
+    inset 0 0 35px rgba(255, 255, 255, 1) !important;
 }
 
 /* Event Images */
@@ -2503,6 +2507,15 @@ body {
   text-align: center;
 }
 
+/* Events Images Container */
+#events-screen > div:first-child > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
 /* Triangles Container */
 #triangles-container {
   position: fixed;
@@ -2513,8 +2526,36 @@ body {
   pointer-events: none;
   overflow: hidden;
 }
-  
 
+/* Back Button in Events Screen */
+#back-events {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 5;
+}
+
+#back-events:hover {
+  background: #0056b3;
+}
+
+#back-events::before {
+  content: '←';
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+
+  
 </style>
 </head>
 <body>
@@ -2608,7 +2649,7 @@ body {
   </button>
 
 <button class="sidebar-btn" id="events-btn">
-    <span style="text-shadow: 0 1px 3px rgba(0,0,0,0.5); font-weight: bold;">✨ Event များ</span>
+    <span style="text-shadow: 0 1px 3px rgba(0,0,0,0.5); font-weight: bold;">Event များ</span>
   
     </div>
   </div>
