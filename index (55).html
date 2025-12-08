@@ -2350,20 +2350,135 @@ body {
   100% { transform: scale(1); }
 }
 
-.sidebar-btn.event-btn-gold {
-  background: linear-gradient(135deg, #ffd700, #ffed4e);
-  border: 1px solid rgba(255, 223, 0, 0.8);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
-  animation: goldGlow 3s infinite alternate;
-  color: #000;
-  font-weight: bold;
-  padding: 10px 15px;
+/* ------------------------------------------ */
+/* ANIMATED BLUE BACKGROUND + FLOATING TRIANGLES */
+/* ------------------------------------------ */
+
+.event-screen {
+  position: fixed;          /* Full screen overlay */
+  inset: 0;
+  display: none;            /* Hidden by default */
+  overflow-y: auto;         /* Scroll if content overflows */
+  padding: 30px;
+  z-index: 999;
+  animation: fadein 0.4s;
+
+  /* Blue gradient background with vertical movement */
+  background: linear-gradient(180deg, #0057ff, #003da0);
+  background-size: 200% 200%;
+  animation: blueMove 8s ease infinite;
 }
 
-@keyframes goldGlow {
-  0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-  100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+/* Blue gradient vertical movement */
+@keyframes blueMove {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
 }
+
+/* Extra layer for small white floating triangles */
+.event-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.09) 0%, transparent 60%),
+    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.04) 0%, transparent 60%);
+  
+  background-size: 300px 300px;
+  animation: triMove 6s linear infinite alternate;
+}
+
+/* Triangle floating movement */
+@keyframes triMove {
+  0%   { opacity: 0.15; transform: translateY(0) rotate(0); }
+  50%  { opacity: 0.30; transform: translateY(-30px) rotate(4deg); }
+  100% { opacity: 0.15; transform: translateY(0) rotate(0); }
+}
+
+/* Fade-in animation for event screen */
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------------------ */
+/* GOLD BUTTON ANIMATION */
+/* ------------------------------------------ */
+
+.event-gold-btn {
+  background: linear-gradient(90deg, #ffd700, #ffb300, #ffd700);
+  animation: goldMove 2s linear infinite;
+  border-radius: 8px;
+}
+
+/* Gold shine animation */
+@keyframes goldMove {
+  0%   { filter: brightness(1); }
+  50%  { filter: brightness(1.4); }
+  100% { filter: brightness(1); }
+}
+
+/* ------------------------------------------ */
+/* BACK BUTTON */
+/* ------------------------------------------ */
+
+.event-back {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  background: #ffffff33;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  font-size: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.event-back:hover {
+  background: #ffffff55;
+}
+
+/* ------------------------------------------ */
+/* HEADER */
+/* ------------------------------------------ */
+
+.event-header {
+  font-size: 28px;
+  color: white;
+  font-weight: bold;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* ------------------------------------------ */
+/* EVENT LIST COLUMNS */
+/* ------------------------------------------ */
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ------------------------------------------ */
+/* EVENT CARD IMAGE */
+/* ------------------------------------------ */
+
+.event-card img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 
 </style>
 </head>
@@ -2457,9 +2572,9 @@ body {
     <span>Gift Code</span>
   </button>
 
-<button class="sidebar-btn" id="event-feature-btn" style="background: linear-gradient(145deg, gold, #ffd700); color: #8B4513; font-weight: bold; animation: pulseGold 2s infinite; box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);">
-  <span>Event များ</span>
-</button>
+    <button class="sidebar-btn event-gold-btn" id="event-btn2">
+      <span>Event</span>
+    </button>
   
     </div>
   </div>
@@ -2496,31 +2611,27 @@ body {
   </div>
 </div>
 
-<div id="events-screen">
-  
-  <div style="background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);">
-    
-    <div style="background: rgba(0, 0, 0, 0.6); border-bottom: 2px solid #ffd700;">
-      <button id="back-events">← Home</button>
-      <div style="color: #ffd700;">Event များ</div>
-      <div></div>
+
+
+<!-- EVENT SCREEN -->
+<div id="event-screen" class="event-screen">
+
+  <button id="event-back" class="event-back">Back</button>
+
+  <div class="event-header">Event များ</div>
+
+  <div class="event-list">
+
+    <div class="event-card">
+      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
     </div>
 
-    <div id="events-content-area">
-      <!-- Event 1 -->
-      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 1" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
-      </div>
+    <div class="event-card">
+      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
+    </div>
 
-      <!-- Event 2 -->
-      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 2" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
-      </div>
-
-      <!-- Event 3 -->
-      <div style="width: 90%; margin: 40px auto; background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 3" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px;">
-      </div>
+    <div class="event-card">
+      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
     </div>
 
   </div>
@@ -9755,21 +9866,15 @@ if (typeof saveUserData !== 'undefined') {
 }
 
 
-        
-const eventsBtn = document.getElementById('events-btn');
-const eventsScreen = document.getElementById('events-screen');
-const backEvents = document.getElementById('back-events');
+// open
+document.getElementById("event-btn").onclick = ()=>{
+  document.getElementById("event-screen").style.display="block"
+}
 
-eventsBtn.addEventListener('click', () => {
-  document.getElementById('main-screen').style.display = 'none';
-  eventsScreen.style.display = 'block';
-});
-
-backEvents.addEventListener('click', () => {
-  eventsScreen.style.display = 'none';
-  document.getElementById('main-screen').style.display = 'block';
-});
-      
+// close
+document.getElementById("event-back").onclick = ()=>{
+  document.getElementById("event-screen").style.display="none"
+}
           
     
     
