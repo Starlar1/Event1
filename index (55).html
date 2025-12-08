@@ -2350,135 +2350,49 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ------------------------------------------ */
-/* ANIMATED BLUE BACKGROUND + FLOATING TRIANGLES */
-/* ------------------------------------------ */
 
-.event-screen {
-  position: fixed;          /* Full screen overlay */
-  inset: 0;
-  display: none;            /* Hidden by default */
-  overflow-y: auto;         /* Scroll if content overflows */
-  padding: 30px;
-  z-index: 999;
-  animation: fadein 0.4s;
-
-  /* Blue gradient background with vertical movement */
-  background: linear-gradient(180deg, #0057ff, #003da0);
-  background-size: 200% 200%;
-  animation: blueMove 8s ease infinite;
+/* Background Animation for Events Screen */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Blue gradient vertical movement */
-@keyframes blueMove {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 0% 100%; }
-  100% { background-position: 0% 0%; }
+/* Triangles Animation */
+@keyframes floatTriangle {
+  0%, 100% { 
+    transform: translate(20px, 50px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% { 
+    transform: translate(calc(100vw - 100px), 200px) rotate(90deg);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translate(300px, calc(100vh - 100px)) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% { 
+    transform: translate(calc(100vw - 300px), 400px) rotate(270deg);
+    opacity: 0.6;
+  }
 }
 
-/* Extra layer for small white floating triangles */
-.event-screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-
-  background-image:
-    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.09) 0%, transparent 60%),
-    radial-gradient(circle at 80% 30%, rgba(255,255,255,0.06) 0%, transparent 60%),
-    radial-gradient(circle at 30% 70%, rgba(255,255,255,0.04) 0%, transparent 60%);
-  
-  background-size: 300px 300px;
-  animation: triMove 6s linear infinite alternate;
+/* Scrollbar Design for Events Container */
+#events-screen div[style*="overflow-y: auto"]::-webkit-scrollbar {
+  width: 6px;
 }
-
-/* Triangle floating movement */
-@keyframes triMove {
-  0%   { opacity: 0.15; transform: translateY(0) rotate(0); }
-  50%  { opacity: 0.30; transform: translateY(-30px) rotate(4deg); }
-  100% { opacity: 0.15; transform: translateY(0) rotate(0); }
+#events-screen div[style*="overflow-y: auto"]::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
 }
-
-/* Fade-in animation for event screen */
-@keyframes fadein {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
+#events-screen div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
 }
-
-/* ------------------------------------------ */
-/* GOLD BUTTON ANIMATION */
-/* ------------------------------------------ */
-
-.event-gold-btn {
-  background: linear-gradient(90deg, #ffd700, #ffb300, #ffd700);
-  animation: goldMove 2s linear infinite;
-  border-radius: 8px;
+#events-screen div[style*="overflow-y: auto"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.5);
 }
-
-/* Gold shine animation */
-@keyframes goldMove {
-  0%   { filter: brightness(1); }
-  50%  { filter: brightness(1.4); }
-  100% { filter: brightness(1); }
-}
-
-/* ------------------------------------------ */
-/* BACK BUTTON */
-/* ------------------------------------------ */
-
-.event-back {
-  position: absolute;
-  left: 20px;
-  top: 20px;
-  background: #ffffff33;
-  border: none;
-  padding: 8px 16px;
-  color: white;
-  font-size: 15px;
-  border-radius: 8px;
-  backdrop-filter: blur(3px);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.event-back:hover {
-  background: #ffffff55;
-}
-
-/* ------------------------------------------ */
-/* HEADER */
-/* ------------------------------------------ */
-
-.event-header {
-  font-size: 28px;
-  color: white;
-  font-weight: bold;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* ------------------------------------------ */
-/* EVENT LIST COLUMNS */
-/* ------------------------------------------ */
-
-.event-list {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* ------------------------------------------ */
-/* EVENT CARD IMAGE */
-/* ------------------------------------------ */
-
-.event-card img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
 
 </style>
 </head>
@@ -2572,9 +2486,10 @@ body {
     <span>Gift Code</span>
   </button>
 
-<button class="sidebar-btn event-gold-btn" id="event-btn">
-      <span>Event</span>
-    </button>
+<!-- Sidebar Menu ထဲမှာ ဒီ Button ကို ထည့်ပါ -->
+<button class="sidebar-btn" id="events-btn" style="background: linear-gradient(145deg, #FFD700, #FFA500); border-color: #FFD700; color: #000;">
+  <span>Event များ</span>
+</button>
   
     </div>
   </div>
@@ -2613,27 +2528,46 @@ body {
 
 
 
-<!-- EVENT SCREEN -->
-<div id="event-screen" class="event-screen">
-
-  <button id="event-back" class="event-back">Back</button>
-
-  <div class="event-header">Event များ</div>
-
-  <div class="event-list">
-
-    <div class="event-card">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
+<!-- Event Screen -->
+<div id="events-screen" style="display: none; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a2a6c, #2a4abd, #3a6aff); background-size: 400% 400%; position: fixed; top: 0; left: 0; z-index: 1000; overflow-y: auto; color: white; padding: 20px;">
+  <button class="back-btn" id="back-events">Home</button>
+  
+  <div style="position: relative; z-index: 1; width: 100%; max-width: 500px; margin: 0 auto; padding: 20px 0;">
+    <!-- Events Header -->
+    <div style="text-align: center; margin-bottom: 30px; padding-top: 20px;">
+      <h2 style="font-size: 32px; margin-bottom: 10px; color: #FFD700; text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);">Event များ</h2>
     </div>
-
-    <div class="event-card">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
+    
+    <!-- Events Container (Scrollable) -->
+    <div style="max-height: 70vh; overflow-y: auto; padding: 0 10px;">
+      <!-- Event 1 -->
+      <div style="margin-bottom: 20px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
+             alt="Event 1" 
+             style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px;">
+      </div>
+      
+      <!-- Event 2 -->
+      <div style="margin-bottom: 20px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
+             alt="Event 2" 
+             style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px;">
+      </div>
+      
+      <!-- Event 3 -->
+      <div style="margin-bottom: 20px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
+             alt="Event 3" 
+             style="width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px;">
+      </div>
     </div>
-
-    <div class="event-card">
-      <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg">
-    </div>
-
+  </div>
+  
+  <!-- Background Triangles Animation -->
+  <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+    <div id="triangle1" style="position: absolute; width: 60px; height: 60px; background: rgba(255,255,255,0.2); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation: floatTriangle 8s ease-in-out infinite;"></div>
+    <div id="triangle2" style="position: absolute; width: 40px; height: 40px; background: rgba(255,255,255,0.15); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation: floatTriangle 6s ease-in-out infinite 2s;"></div>
+    <div id="triangle3" style="position: absolute; width: 50px; height: 50px; background: rgba(255,255,255,0.1); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation: floatTriangle 10s ease-in-out infinite 4s;"></div>
   </div>
 </div>
 
@@ -9867,27 +9801,48 @@ if (typeof saveUserData !== 'undefined') {
 
 
    
-  // ===== EVENT SCREEN TOGGLE =====
-const eventBtn = document.getElementById('event-btn');
-const eventScreen = document.getElementById('event-screen');
-const eventBack = document.getElementById('event-back');
+// Event Screen Navigation
+const eventsBtn = document.getElementById('events-btn');
+const eventsScreen = document.getElementById('events-screen');
+const backEventsBtn = document.getElementById('back-events');
 
-if (eventBtn && eventScreen && eventBack) {
-  // Event Button ကိုနှိပ်ရင် Event Screen ပေါ်မယ်
-  eventBtn.addEventListener('click', () => {
-    document.getElementById('main-screen').style.display = 'none';
-    eventScreen.style.display = 'block';
-  });
+eventsBtn.addEventListener('click', ()=>{
+  mainScreen.style.display='none';
+  eventsScreen.style.display='block';
+  startTriangleAnimation();
+});
 
-  // Back Button ကိုနှိပ်ရင် Main Screen ပြန်ပေါ်မယ်
-  eventBack.addEventListener('click', () => {
-    eventScreen.style.display = 'none';
-    document.getElementById('main-screen').style.display = 'block';
+backEventsBtn.addEventListener('click', ()=>{
+  eventsScreen.style.display='none';
+  mainScreen.style.display='block';
+});
+
+// Triangle Animation Function
+function startTriangleAnimation() {
+  // Randomize triangle positions
+  const triangles = ['triangle1', 'triangle2', 'triangle3'];
+  triangles.forEach((id, index) => {
+    const triangle = document.getElementById(id);
+    if (triangle) {
+      // Random initial position
+      const randomX = Math.random() * 90;
+      const randomY = Math.random() * 90;
+      triangle.style.left = randomX + 'vw';
+      triangle.style.top = randomY + 'vh';
+    }
   });
-} else {
-  console.log('Event screen elements not found');
-}      
-    
+}
+
+// Sidebar button အရောင်ပြောင်းခြင်း
+eventsBtn.addEventListener('mouseover', function() {
+  this.style.transform = 'translateX(-5px) scale(1.05)';
+  this.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.7)';
+});
+
+eventsBtn.addEventListener('mouseout', function() {
+  this.style.transform = 'translateX(0) scale(1)';
+  this.style.boxShadow = '0 0 10px rgba(0, 100, 255, 0.3)';
+});
     
   
 
