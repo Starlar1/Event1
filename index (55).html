@@ -2351,232 +2351,6 @@ body {
 }
 
 
-/* Event Photos Screen */
-#event-photo-screen {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-  overflow-y: auto;
-  color: white;
-}
-
-/* Back Button */
-#back-event-photo {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  padding: 12px 20px;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2196f3, #0d47a1);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  z-index: 1001;
-  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-  transition: all 0.3s ease;
-}
-
-#back-event-photo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.6);
-}
-
-/* Golden Button Styles */
-#event-photo-btn {
-  background: linear-gradient(145deg, #FFD700, #FFA500, #FFD700) !important;
-  background-size: 200% 200% !important;
-  color: #000 !important;
-  font-weight: bold !important;
-  border: 2px solid #FFA500 !important;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6) !important;
-  animation: goldenGlow 1.5s infinite ease-in-out, goldenShine 3s infinite linear !important;
-  position: relative !important;
-  overflow: hidden !important;
-}
-
-#event-photo-btn:hover {
-  animation: goldenGlow 0.8s infinite ease-in-out, goldenShine 1.5s infinite linear !important;
-  transform: translateX(-8px) scale(1.05) !important;
-  box-shadow: 0 0 35px rgba(255, 215, 0, 0.9),
-              0 0 50px rgba(255, 165, 0, 0.6),
-              inset 0 0 20px rgba(255, 215, 0, 0.4) !important;
-}
-
-/* Animations */
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes goldenGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5),
-                0 0 25px rgba(255, 165, 0, 0.3),
-                inset 0 0 10px rgba(255, 215, 0, 0.2);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
-                0 0 40px rgba(255, 165, 0, 0.5),
-                inset 0 0 15px rgba(255, 215, 0, 0.3);
-    transform: scale(1.03);
-  }
-}
-
-@keyframes goldenShine {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Photo Grid */
-.event-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 40px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.event-photo-item {
-  position: relative;
-  border-radius: 15px;
-  overflow: hidden;
-  cursor: pointer;
-  aspect-ratio: 3/4;
-  border: 2px solid rgba(79, 195, 247, 0.5);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.event-photo-item:hover {
-  transform: scale(1.05) rotate(1deg);
-  border-color: #4fc3f7;
-  box-shadow: 0 20px 50px rgba(79, 195, 247, 0.4);
-}
-
-.event-photo-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.photo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.vip-badge {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: #000;
-  padding: 6px 12px;
-  border-radius: 15px;
-  font-weight: bold;
-  font-size: 12px;
-  z-index: 10;
-  box-shadow: 0 4px 10px rgba(255, 215, 0, 0.5);
-  animation: badgeFloat 2s infinite ease-in-out;
-}
-
-@keyframes badgeFloat {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-/* Header */
-.event-photo-header {
-  text-align: center;
-  padding-top: 100px;
-  padding-bottom: 40px;
-}
-
-.event-photo-header h1 {
-  font-size: 42px;
-  color: #4fc3f7;
-  text-shadow: 0 0 25px rgba(79, 195, 247, 0.8);
-  margin-bottom: 15px;
-  animation: titleGlow 2s infinite alternate;
-}
-
-@keyframes titleGlow {
-  0% {
-    text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
-  }
-  100% {
-    text-shadow: 0 0 25px rgba(79, 195, 247, 0.8),
-                 0 0 35px rgba(79, 195, 247, 0.6);
-  }
-}
-
-/* Particles */
-.particles-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.particle {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  animation: floatUp linear infinite;
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(100vh) translateX(0) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.8;
-  }
-  90% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-100px) translateX(var(--random-x)) rotate(360deg);
-    opacity: 0;
-  }
-}
 
 </style>
 </head>
@@ -2669,9 +2443,7 @@ body {
   <button class="sidebar-btn" id="gift-code-btn">
     <span>Gift Code</span>
   </button>
-    <button class="sidebar-btn" id="event-photo-btn">
-    <span>Event များ</span>
-  </button>
+
   
     </div>
   </div>
@@ -2688,99 +2460,6 @@ body {
   <div id="chat-text"></div>
   <img id="chat-icon" src="    " alt="Chat Icon">
 </div>
-
-<!-- Event Photo Screen (ဒီတစ်ခုကိုသာ ထည့်ပါ) -->
-<div id="event-photo-screen" style="display: none; width: 100vw; height: 100vh; 
-  background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
-  background-size: 400% 400%;
-  position: fixed; top: 0; left: 0; z-index: 1000; 
-  overflow-y: auto; color: white;
-  animation: gradientBG 15s ease infinite;">
-  
-  <!-- Back Button -->
-  <button id="back-event-photo" style="
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 12px 20px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #2196f3, #0d47a1);
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    z-index: 1001;
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-    transition: all 0.3s ease;
-  ">
-    <span style="margin-right: 8px;">←</span> Home
-  </button>
-  
-  <!-- Animated White Particles Background -->
-  <div id="particles-container" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    overflow: hidden;
-  "></div>
-  
-  <!-- Main Content Container -->
-  <div style="position: relative; z-index: 1; min-height: 100vh;">
-    
-    <!-- Header -->
-    <div style="text-align: center; padding-top: 100px; padding-bottom: 50px;">
-      <h1 style="
-        font-size: 48px;
-        color: #4fc3f7;
-        text-shadow: 0 0 30px rgba(79, 195, 247, 0.8);
-        margin-bottom: 15px;
-        font-weight: bold;
-        animation: titleGlow 2s infinite alternate;
-      ">
-        📸 EVENT PHOTOS
-      </h1>
-      <p style="
-        font-size: 18px;
-        color: #bbdefb;
-        opacity: 0.9;
-        max-width: 600px;
-        margin: 0 auto;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-      ">
-        Select an event photo to view details
-      </p>
-    </div>
-    
-    <!-- Photo Grid Container -->
-    <div style="
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    " id="event-photo-grid">
-      <!-- Photos will be loaded here by JavaScript -->
-    </div>
-    
-    <!-- Coming Soon Message -->
-    <div style="
-      text-align: center;
-      padding: 40px 20px;
-      color: #bbdefb;
-      opacity: 0.7;
-    ">
-      <p style="font-size: 14px;">More events coming soon...</p>
-    </div>
-    
-  </div>
-</div>
-  
 
 <!-- Gift Code Screen - NEW -->
 <div id="gift-code-screen" style="display: none; width: 100vw; height: 100vh; background: linear-gradient(135deg, #1a2a6c, #2a4abd, #3a6aff); background-size: cover; background-position: center; position: fixed; top: 0; left: 0; z-index: 1000; overflow-y: auto; color: white; padding: 20px;">
@@ -6258,6 +5937,11 @@ window.refreshRankings = function() {
 };
 
 console.log('Rank System loaded successfully!');
+
+
+
+
+
 
 // 🎨 FRAME SYSTEM FULL SCRIPT (UPDATED)
 // ===============================
@@ -10026,351 +9710,573 @@ if (typeof saveUserData !== 'undefined') {
     };
 }
 
+// ===== MODERN EVENTS SCREEN SYSTEM (FIXED VERSION) =====
+// Author: Starlar
+// Version: 1.2.1
+// Description: Fixed header events screen with animated blue background
 
-  // Event Photos System
-(function() {
+// ===== CONFIGURATION =====
+const EVENTS_CONFIG = {
+  // Animated Blue Background
+  bgColors: [
+    'linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%)',
+    'linear-gradient(135deg, #283593 0%, #3949ab 50%, #5c6bc0 100%)',
+    'linear-gradient(135deg, #3949ab 0%, #5c6bc0 50%, #7986cb 100%)'
+  ],
   
-  // Photo Configuration - VIP/Free ခွဲထားတယ်
-  const photos = [
-    // VIP Photos (ရွှေရောင်ဖန်တီးရန်)
-    {
-      id: 'vip-1',
-      image: 'https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg',
-      type: 'VIP',
-      enabled: true,
-      screen: 'vip-event-1'
-    },
-    // Free Photos (သာမန်ရောင်ဖန်တီးရန်)
-    {
-      id: 'free-1',
-      image: '',
-      type: 'Free',
-      enabled: false,
-      screen: null
-    },
-    {
-      id: 'free-2',
-      image: '',
-      type: 'Free',
-      enabled: false,
-      screen: null
-    },
-    {
-      id: 'free-3',
-      image: '',
-      type: 'Free',
-      enabled: false,
-      screen: null
-    },
-    {
-      id: 'vip-2',
-      image: '',
-      type: 'VIP',
-      enabled: false,
-      screen: null
-    },
-    {
-      id: 'free-4',
-      image: '',
-      type: 'Free',
-      enabled: false,
-      screen: null
-    }
-  ];
+  // Colors
+  goldColor: '#ffd700',
+  goldGradient: 'linear-gradient(135deg, #ffd700, #ffed4e)',
   
-  // Initialize
-  document.addEventListener('DOMContentLoaded', function() {
-    
-    // Event Photo Button
-    const eventPhotoBtn = document.getElementById('event-photo-btn');
-    if (eventPhotoBtn) {
-      eventPhotoBtn.addEventListener('click', showEventPhotoScreen);
-    }
-    
-    // Back Button
-    const backBtn = document.getElementById('back-event-photo');
-    if (backBtn) {
-      backBtn.addEventListener('click', hideEventPhotoScreen);
-    }
-    
-  });
+  // Animation
+  hoverScale: 1.02,
+  transitionSpeed: '0.3s',
+  bgAnimationSpeed: '10s',
   
-  // Show Event Photo Screen
-  function showEventPhotoScreen() {
-    const mainScreen = document.getElementById('main-screen');
-    const eventPhotoScreen = document.getElementById('event-photo-screen');
-    
-    if (mainScreen) mainScreen.style.display = 'none';
-    if (eventPhotoScreen) {
-      eventPhotoScreen.style.display = 'block';
-      loadPhotos();
-      createParticles();
+  // Events data structure
+  events: [
+    {
+      id: 'main-event',
+      title: 'VIP Event',
+      image: 'https://i.ibb.co/S7xjSh8f/Grid-Art-20251204-175515291.jpg',
+      badge: 'VIP',
+      badgePosition: 'right',
+      badgeColor: 'dark',
+      isActive: true,
+      priority: 1
     }
+  ]
+};
+
+// ===== EVENT MANAGER CLASS =====
+class EventManager {
+  constructor() {
+    this.events = EVENTS_CONFIG.events;
+    this.currentScreen = null;
   }
-  
-  // Hide Event Photo Screen
-  function hideEventPhotoScreen() {
-    const mainScreen = document.getElementById('main-screen');
-    const eventPhotoScreen = document.getElementById('event-photo-screen');
-    
-    if (eventPhotoScreen) eventPhotoScreen.style.display = 'none';
-    if (mainScreen) mainScreen.style.display = 'block';
-  }
-  
-  // Load Photos
-  function loadPhotos() {
-    const grid = document.getElementById('event-photo-grid');
-    if (!grid) return;
-    
-    grid.innerHTML = '';
-    
-    photos.forEach(photo => {
-      const photoDiv = document.createElement('div');
+
+  // Create compact events screen with FIXED HEADER
+  createEventsScreen() {
+    const eventsScreenHTML = `
+    <!-- Events Screen -->
+    <div id="events-screen" style="
+      display: none; 
+      width: 100vw; 
+      height: 100vh; 
+      background: ${EVENTS_CONFIG.bgColors[0]}; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      z-index: 1000; 
+      overflow: hidden;
+      animation: bgPulse ${EVENTS_CONFIG.bgAnimationSpeed} infinite alternate;
+    ">
       
-      // VIP နဲ့ Free အတွက် အရောင်ခွဲ
-      const isVip = photo.type === 'VIP';
+      <!-- Animated Background Elements -->
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+          radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(100,149,237,0.15) 0%, transparent 40%);
+        animation: float 20s infinite ease-in-out;
+        pointer-events: none;
+        z-index: 1;
+      "></div>
       
-      if (photo.image && photo.enabled) {
-        // Active Photo
-        photoDiv.style.cssText = `
-          position: relative;
-          border-radius: 15px;
-          overflow: hidden;
-          cursor: pointer;
-          aspect-ratio: 3/4;
-          border: ${isVip ? '3px solid gold' : '2px solid #4fc3f7'};
-          box-shadow: ${isVip ? 
-            '0 0 30px rgba(255, 215, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.5)' : 
-            '0 10px 30px rgba(0, 0, 0, 0.5)'};
-          transition: all 0.3s ease;
-          background: rgba(255, 255, 255, 0.1);
-        `;
-        
-        // ပုံထည့်
-        const img = document.createElement('img');
-        img.src = photo.image;
-        img.alt = photo.type + ' Event';
-        img.style.cssText = `
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          transition: transform 0.3s ease;
-        `;
-        
-        photoDiv.appendChild(img);
-        
-        // Hover Effects
-        photoDiv.addEventListener('mouseenter', function() {
-          this.style.transform = 'scale(1.05)';
-          if (isVip) {
-            this.style.boxShadow = '0 0 50px rgba(255, 215, 0, 0.8), 0 20px 50px rgba(0, 0, 0, 0.6)';
-            this.style.borderColor = '#FFD700';
-          } else {
-            this.style.boxShadow = '0 20px 50px rgba(79, 195, 247, 0.4)';
-            this.style.borderColor = '#4fc3f7';
-          }
-          img.style.transform = 'scale(1.1)';
-        });
-        
-        photoDiv.addEventListener('mouseleave', function() {
-          this.style.transform = 'scale(1)';
-          if (isVip) {
-            this.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.5)';
-            this.style.borderColor = 'gold';
-          } else {
-            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
-            this.style.borderColor = '#4fc3f7';
-          }
-          img.style.transform = 'scale(1)';
-        });
-        
-        // Click Event
-        photoDiv.addEventListener('click', function() {
-          handlePhotoClick(photo);
-        });
-        
-      } else {
-        // Empty Slot (VIP or Free based on type)
-        photoDiv.style.cssText = `
-          border-radius: 15px;
-          aspect-ratio: 3/4;
-          border: ${isVip ? '2px dashed gold' : '2px dashed #4fc3f7'};
-          background: rgba(255, 255, 255, 0.05);
-          cursor: not-allowed;
-          display: flex;
-          align-items: center;
+      <!-- Sparkle Effects -->
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          radial-gradient(1px 1px at 20% 30%, white 1px, transparent 0),
+          radial-gradient(1px 1px at 40% 70%, white 1px, transparent 0),
+          radial-gradient(1.5px 1.5px at 60% 20%, white 1px, transparent 0),
+          radial-gradient(1px 1px at 80% 50%, white 1px, transparent 0);
+        background-size: 300px 300px;
+        animation: sparkle 4s infinite;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.3;
+      "></div>
+      
+      <!-- FIXED HEADER BAR (Does not scroll) -->
+      <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.6); 
+        backdrop-filter: blur(10px);
+        border-bottom: 2px solid ${EVENTS_CONFIG.goldColor};
+        z-index: 20;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+      ">
+        <!-- Back Button -->
+        <button id="back-events" style="
+          background: ${EVENTS_CONFIG.goldColor}; 
+          border: none; 
+          border-radius: 5px; 
+          color: #000; 
+          cursor: pointer; 
+          display: flex; 
+          align-items: center; 
           justify-content: center;
-        `;
+          font-weight: bold;
+          font-size: 12px;
+          padding: 6px 12px;
+          min-width: 70px;
+          box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+          transition: all 0.2s ease;
+        ">
+          ← Home
+        </button>
         
-        const plusDiv = document.createElement('div');
-        plusDiv.style.cssText = `
-          font-size: 48px;
-          color: ${isVip ? 'rgba(255, 215, 0, 0.3)' : 'rgba(79, 195, 247, 0.3)'};
-        `;
-        plusDiv.textContent = '+';
+        <!-- Title -->
+        <div style="
+          color: ${EVENTS_CONFIG.goldColor}; 
+          font-size: 16px; 
+          font-weight: bold; 
+          text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+          letter-spacing: 0.5px;
+          flex: 1;
+          text-align: center;
+          margin: 0 20px;
+        ">
+          Event များ
+        </div>
         
-        photoDiv.appendChild(plusDiv);
-      }
-      
-      grid.appendChild(photoDiv);
-    });
+        <!-- Spacer for alignment -->
+        <div style="width: 70px;"></div>
+      </div>
+
+      <!-- SCROLLABLE CONTENT AREA (Starts below fixed header) -->
+      <div style="
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+        z-index: 10;
+        padding: 20px;
+      ">
+        <div style="
+          max-width: 1000px; 
+          margin: 0 auto;
+        ">
+          <div id="events-container" style="
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 25px; 
+            justify-items: center;
+          ">
+            <!-- Events will be dynamically added here -->
+          </div>
+          
+          <!-- Add some bottom spacing -->
+          <div style="height: 50px;"></div>
+        </div>
+      </div>
+
+    </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', eventsScreenHTML);
+    this.currentScreen = document.getElementById('events-screen');
+    
+    // Start background animation
+    this.startBackgroundAnimation();
+    
+    // Render all events
+    this.renderEvents();
   }
-  
-  // Create Floating Particles
-  function createParticles() {
-    const container = document.getElementById('particles-container');
+
+  // Animate background
+  startBackgroundAnimation() {
+    const screen = this.currentScreen;
+    if (!screen) return;
+    
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % EVENTS_CONFIG.bgColors.length;
+      screen.style.background = EVENTS_CONFIG.bgColors[index];
+    }, 3000);
+  }
+
+  // Render events to the screen
+  renderEvents() {
+    const container = document.getElementById('events-container');
     if (!container) return;
     
     container.innerHTML = '';
     
-    // Create particles
-    for (let i = 0; i < 20; i++) {
-      const particle = document.createElement('div');
-      const size = Math.random() * 6 + 2;
-      const randomX = Math.random();
-      const duration = Math.random() * 15 + 10;
-      const delay = Math.random() * 5;
-      const opacity = Math.random() * 0.2 + 0.1;
-      
-      particle.style.cssText = `
-        position: absolute;
-        width: ${size}px;
-        height: ${size}px;
-        background: rgba(255, 255, 255, ${opacity});
-        border-radius: 50%;
-        bottom: -20px;
-        left: ${randomX * 100}%;
-        animation: floatParticle ${duration}s linear infinite ${delay}s;
-        --random-x: ${randomX};
-        filter: blur(${Math.random() * 2}px);
+    // Sort events by priority
+    const sortedEvents = [...this.events].sort((a, b) => a.priority - b.priority);
+    
+    sortedEvents.forEach(event => {
+      if (event.isActive) {
+        const eventHTML = this.createEventCard(event);
+        container.insertAdjacentHTML('beforeend', eventHTML);
+      }
+    });
+    
+    // Add compact placeholders
+    for (let i = 0; i < 3; i++) {
+      const placeholderHTML = `
+        <div class="event-placeholder" style="
+          background: rgba(255,255,255,0.03); 
+          border: 1px dashed rgba(255,255,255,0.1); 
+          border-radius: 8px; 
+          min-height: 150px; 
+          width: 100%; 
+          display: flex; 
+          align-items: center; 
+          justify-content: center;
+          opacity: 0.5;
+          backdrop-filter: blur(3px);
+          transition: all 0.3s ease;
+        ">
+          <span style="color: rgba(255,255,255,0.2); font-size: 20px;">+</span>
+        </div>
       `;
-      
-      container.appendChild(particle);
+      container.insertAdjacentHTML('beforeend', placeholderHTML);
     }
   }
-  
-  // Handle Photo Click
-  function handlePhotoClick(photo) {
-    if (!photo.enabled) {
-      // Create notification
-      const notification = document.createElement('div');
-      notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: ${photo.type === 'VIP' ? 
-          'rgba(255, 215, 0, 0.9)' : 
-          'rgba(79, 195, 247, 0.9)'};
-        color: ${photo.type === 'VIP' ? '#000' : '#fff'};
-        padding: 15px 25px;
-        border-radius: 10px;
-        z-index: 3000;
-        animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-      `;
-      
-      notification.textContent = `${photo.type} Event - Coming Soon!`;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        if (notification.parentNode) {
-          notification.remove();
-        }
-      }, 3000);
-      
-      return;
-    }
+
+  // Create compact event card
+  createEventCard(event) {
+    const badgeStyle = event.badgePosition === 'right' 
+      ? 'right: 10px; left: auto;' 
+      : 'left: 10px; right: auto;';
     
-    // Create Event Detail Screen
-    const screen = document.createElement('div');
-    screen.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    `;
+    const badgeBackground = event.badgeColor === 'dark' 
+      ? 'rgba(0, 0, 0, 0.85)' 
+      : EVENTS_CONFIG.goldGradient;
     
-    screen.innerHTML = `
-      <div style="
-        max-width: 600px;
+    const badgeTextColor = event.badgeColor === 'dark' 
+      ? EVENTS_CONFIG.goldColor 
+      : '#000';
+    
+    return `
+    <div class="event-card" data-event-id="${event.id}" style="
+      position: relative;
+      cursor: pointer;
+      transition: all ${EVENTS_CONFIG.transitionSpeed} ease;
+      grid-column: ${event.priority === 1 ? '1 / -1' : 'auto'};
+      max-width: ${event.priority === 1 ? '500px' : '100%'};
+      margin: ${event.priority === 1 ? '0 auto 10px auto' : '0'};
+    ">
+      <img src="${event.image}" alt="${event.title}" style="
         width: 100%;
-        background: linear-gradient(135deg, #1a1a2e, #0f3460);
-        border-radius: 20px;
-        padding: 30px;
-        border: ${photo.type === 'VIP' ? '3px solid gold' : '2px solid #4fc3f7'};
-        box-shadow: ${photo.type === 'VIP' ? 
-          '0 0 40px rgba(255, 215, 0, 0.5)' : 
-          '0 0 40px rgba(79, 195, 247, 0.5)'};
-        position: relative;
+        border-radius: 10px;
+        border: 2px solid rgba(255,215,0,0.4);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        transition: all ${EVENTS_CONFIG.transitionSpeed} ease;
       ">
-        <button id="close-event-detail" style="
-          position: absolute;
-          top: 15px;
-          right: 15px;
-          background: rgba(255,255,255,0.1);
-          border: none;
-          color: white;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          font-size: 20px;
-          cursor: pointer;
-        ">×</button>
-        
-        <img src="${photo.image}" alt="${photo.type} Event" 
-             style="width: 100%; border-radius: 10px; margin-bottom: 20px;">
+      
+      ${event.badge ? `
+      <div style="
+        position: absolute;
+        top: 10px;
+        ${badgeStyle}
+        background: ${badgeBackground};
+        color: ${badgeTextColor};
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        border: 1px solid ${event.badgeColor === 'dark' ? 'rgba(255,215,0,0.4)' : 'rgba(255,255,255,0.6)'};
+        backdrop-filter: blur(4px);
+        z-index: 2;
+        min-width: 40px;
+        text-align: center;
+        letter-spacing: 0.5px;
+      ">
+        ${event.badge}
       </div>
+      ` : ''}
+      
+    </div>
+    `;
+  }
+
+  // Add event to sidebar
+  addEventButtonToSidebar() {
+    const sidebarButtons = document.getElementById('sidebar-buttons');
+    
+    if (sidebarButtons) {
+      const eventButtonHTML = `
+        <button class="sidebar-btn event-btn-gold" id="events-btn">
+          <span style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 16px;"></span>
+            <span style="font-size: 13px;">မကြာမှီလာမည်</span>
+          </span>
+        </button>
+      `;
+      
+      sidebarButtons.insertAdjacentHTML('beforeend', eventButtonHTML);
+    }
+  }
+
+  // Add CSS styles
+  addStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+      /* Background Animations */
+      @keyframes bgPulse {
+        0%, 100% {
+          background: ${EVENTS_CONFIG.bgColors[0]};
+          filter: brightness(1);
+        }
+        33% {
+          background: ${EVENTS_CONFIG.bgColors[1]};
+          filter: brightness(1.05);
+        }
+        66% {
+          background: ${EVENTS_CONFIG.bgColors[2]};
+          filter: brightness(1.1);
+        }
+      }
+      
+      @keyframes float {
+        0%, 100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        25% {
+          transform: translate(-10px, 10px) rotate(1deg);
+        }
+        50% {
+          transform: translate(5px, -5px) rotate(-1deg);
+        }
+        75% {
+          transform: translate(-5px, -10px) rotate(1deg);
+        }
+      }
+      
+      @keyframes sparkle {
+        0%, 100% {
+          opacity: 0.3;
+          transform: translate(0, 0);
+        }
+        50% {
+          opacity: 0.6;
+          transform: translate(5px, 5px);
+        }
+      }
+      
+      /* Compact Gold Event Button */
+      .sidebar-btn.event-btn-gold {
+        background: ${EVENTS_CONFIG.goldGradient};
+        border: 1px solid rgba(255, 223, 0, 0.8);
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        animation: goldGlow 3s infinite alternate;
+        color: #000;
+        font-weight: bold;
+        padding: 10px 15px;
+        min-width: 110px;
+      }
+      
+      .sidebar-btn.event-btn-gold:hover {
+        background: linear-gradient(145deg, #ffea00, #ffd700);
+        transform: translateX(-4px) scale(1.03);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+        animation: goldPulse 0.5s infinite alternate;
+      }
+      
+      @keyframes goldGlow {
+        0% {
+          box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        100% {
+          box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+      }
+      
+      @keyframes goldPulse {
+        0% {
+          box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+        100% {
+          box-shadow: 0 0 25px rgba(255, 215, 0, 1);
+        }
+      }
+      
+      /* Event Card Hover Effects */
+      .event-card:hover {
+        transform: scale(${EVENTS_CONFIG.hoverScale});
+      }
+      
+      .event-card:hover img {
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        border-color: rgba(255,215,0,0.7);
+        filter: contrast(1.1);
+      }
+      
+      .event-card:hover > div {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      }
+      
+      /* Placeholder Hover */
+      .event-placeholder:hover {
+        border-color: rgba(255,215,0,0.3);
+        opacity: 0.8;
+        transform: translateY(-3px);
+        background: rgba(255,255,255,0.05);
+      }
+      
+      /* Back Button Hover */
+      #back-events:hover {
+        background: #ffcc00 !important;
+        box-shadow: 0 4px 15px rgba(255, 204, 0, 0.6) !important;
+        transform: scale(1.05);
+      }
+      
+      /* Custom Scrollbar */
+      #events-screen > div:nth-child(5)::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      #events-screen > div:nth-child(5)::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.2);
+        border-radius: 3px;
+      }
+      
+      #events-screen > div:nth-child(5)::-webkit-scrollbar-thumb {
+        background: rgba(255,215,0,0.5);
+        border-radius: 3px;
+      }
+      
+      #events-screen > div:nth-child(5)::-webkit-scrollbar-thumb:hover {
+        background: rgba(255,215,0,0.7);
+      }
     `;
     
-    document.body.appendChild(screen);
+    document.head.appendChild(style);
+  }
+
+  // Initialize event handlers
+  initEventHandlers() {
+    const eventsBtn = document.getElementById('events-btn');
+    const backEventsBtn = document.getElementById('back-events');
+    const mainScreen = document.getElementById('main-screen');
     
-    // Close button
-    document.getElementById('close-event-detail').addEventListener('click', function() {
-      screen.remove();
-    });
+    // Event Button Click
+    if (eventsBtn) {
+      eventsBtn.addEventListener('click', () => {
+        mainScreen.style.display = 'none';
+        this.currentScreen.style.display = 'block';
+      });
+    }
     
-    // Close on background click
-    screen.addEventListener('click', function(e) {
-      if (e.target === screen) {
-        screen.remove();
+    // Back Button Click
+    if (backEventsBtn) {
+      backEventsBtn.addEventListener('click', () => {
+        this.currentScreen.style.display = 'none';
+        mainScreen.style.display = 'block';
+      });
+    }
+    
+    // Event Card Clicks
+    document.addEventListener('click', (e) => {
+      const eventCard = e.target.closest('.event-card');
+      if (eventCard) {
+        const eventId = eventCard.dataset.eventId;
+        this.handleEventClick(eventId);
       }
     });
   }
-  
-  // Add Notification Animation
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes slideIn {
-      from {
-        transform: translateX(-50%) translateY(-20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(-50%) translateY(0);
-        opacity: 1;
-      }
+
+  // Handle event click
+  handleEventClick(eventId) {
+    const event = this.events.find(e => e.id === eventId);
+    if (event) {
+      console.log(`Event clicked: ${event.title}`);
+      // Add your custom event handling logic here
     }
+  }
+
+  // ===== PUBLIC API =====
+  
+  addEvent(eventData) {
+    const newEvent = {
+      id: eventData.id || `event-${Date.now()}`,
+      title: eventData.title || 'New Event',
+      image: eventData.image || '',
+      badge: eventData.badge || '',
+      badgePosition: eventData.badgePosition || 'right',
+      badgeColor: eventData.badgeColor || 'dark',
+      isActive: eventData.isActive !== false,
+      priority: eventData.priority || 2
+    };
     
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-  `;
-  document.head.appendChild(style);
+    this.events.push(newEvent);
+    this.renderEvents();
+    return newEvent.id;
+  }
   
-})();
-        
-        
+  removeEvent(eventId) {
+    this.events = this.events.filter(event => event.id !== eventId);
+    this.renderEvents();
+  }
+  
+  getAllEvents() {
+    return this.events;
+  }
+  
+  updateEvent(eventId, updates) {
+    const index = this.events.findIndex(e => e.id === eventId);
+    if (index !== -1) {
+      this.events[index] = { ...this.events[index], ...updates };
+      this.renderEvents();
+    }
+  }
+  
+  init() {
+    this.createEventsScreen();
+    this.addEventButtonToSidebar();
+    this.addStyles();
+    this.initEventHandlers();
+  }
+}
+
+// ===== GLOBAL EVENT MANAGER INSTANCE =====
+window.EventSystem = new EventManager();
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(() => {
+    window.EventSystem.init();
+  }, 3000);
+});
+
+// ===== USAGE EXAMPLES =====
+/*
+// နောက်မှ Event အသစ်ထည့်ရန်:
+EventSystem.addEvent({
+  image: 'https://example.com/image.jpg',
+  badge: 'NEW'
+});
+
+// Event ပြင်ရန်:
+EventSystem.updateEvent('main-event', {
+  badge: 'HOT'
+});
+*/
+
 
 
 
