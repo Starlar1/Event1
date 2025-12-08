@@ -2407,73 +2407,69 @@ body {
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
 }
 
-/* Event Button - Gold Animation */
+/* Event Button - Color Only Animation */
 #events-btn {
   background: linear-gradient(145deg, #FFD700, #FFA500, #FFD700) !important;
   border: 2px solid #FFD700 !important;
-  color: #000 !important;
+  color: white !important; /* အဖြူရောင် */
   font-weight: bold !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
   box-shadow: 
     0 0 20px rgba(255, 215, 0, 0.8),
     0 0 40px rgba(255, 215, 0, 0.5),
     inset 0 0 15px rgba(255, 255, 255, 0.6) !important;
-  animation: 
-    goldPulse 1.2s ease-in-out infinite,
-    goldShine 3s linear infinite !important;
+  animation: colorPulse 1.5s ease-in-out infinite !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transform: translateX(0) !important; /* မလှုပ် */
 }
 
-/* Gold Pulse Effect */
-@keyframes goldPulse {
+/* Color Pulse Animation Only */
+@keyframes colorPulse {
   0%, 100% {
-    transform: translateX(0);
     box-shadow: 
-      0 0 20px rgba(255, 215, 0, 0.8),
-      0 0 40px rgba(255, 215, 0, 0.5),
-      inset 0 0 15px rgba(255, 255, 255, 0.6);
+      0 0 15px rgba(255, 215, 0, 0.7),
+      0 0 30px rgba(255, 215, 0, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.5);
   }
   50% {
-    transform: translateX(-10px);
     box-shadow: 
-      0 0 30px rgba(255, 215, 0, 1),
-      0 0 60px rgba(255, 215, 0, 0.7),
-      inset 0 0 25px rgba(255, 255, 255, 0.9);
-  }
-}
-
-/* Gold Shine Effect */
-@keyframes goldShine {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: 200px 0;
-  }
-}
-
-/* Hover Effects */
-#events-btn:hover {
-  animation: 
-    goldPulseFast 0.6s ease-in-out infinite,
-    goldShine 1.5s linear infinite !important;
-  transform: translateX(-12px) scale(1.08) !important;
-}
-
-@keyframes goldPulseFast {
-  0%, 100% {
-    box-shadow: 
-      0 0 25px rgba(255, 215, 0, 1),
-      0 0 50px rgba(255, 215, 0, 0.7),
+      0 0 25px rgba(255, 215, 0, 0.9),
+      0 0 50px rgba(255, 215, 0, 0.6),
       inset 0 0 20px rgba(255, 255, 255, 0.8);
   }
+}
+
+/* Hover Effect - Color Only */
+#events-btn:hover {
+  animation: colorPulseFast 0.8s ease-in-out infinite !important;
+  transform: scale(1.05) !important; /* Scale only, no movement */
+}
+
+@keyframes colorPulseFast {
+  0%, 100% {
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.9),
+      0 0 40px rgba(255, 215, 0, 0.6),
+      inset 0 0 15px rgba(255, 255, 255, 0.7);
+  }
   50% {
     box-shadow: 
-      0 0 40px rgba(255, 215, 0, 1),
-      0 0 80px rgba(255, 215, 0, 0.9),
-      inset 0 0 35px rgba(255, 255, 255, 1);
+      0 0 35px rgba(255, 215, 0, 1),
+      0 0 70px rgba(255, 215, 0, 0.8),
+      inset 0 0 30px rgba(255, 255, 255, 1);
   }
+}
+
+/* Remove all movement animations */
+#events-btn::before {
+  display: none; /* ရွှေရောင်လိုင်းဖျောက် */
+}
+
+/* Active state - no movement */
+#events-btn:active {
+  transform: scale(0.98) !important; /* Scale only */
 }
 
 /* Event Images */
