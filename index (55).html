@@ -2350,148 +2350,174 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ===== EVENTS SCREEN STYLES ===== */
+
+/* ================= EVENTS SCREEN CSS ================= */
+
+/* Events Screen Container */
 #events-screen {
   display: none;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #1a2a6c, #2a4abd, #3a6aff);
+  background: linear-gradient(135deg, #0a1a5c, #1a3acd, #2a5aff);
   background-size: 400% 400%;
-  animation: gradientFlow 8s ease infinite;
+  animation: gradientFlow 6s ease infinite;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
   color: white;
+  overflow-y: auto;
 }
 
-/* Background Gradient Animation */
+/* Background Animation */
 @keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0%, 100% { 
+    background-position: 0% 50%;
+  }
+  50% { 
+    background-position: 100% 50%;
+  }
 }
 
 /* Triangle Animation */
 @keyframes triangleFloat {
   0% { 
-    transform: translate(0, 0) rotate(0deg); 
+    transform: translate(0, 0) rotate(0deg) scale(1);
     opacity: 0;
   }
   10% { 
-    opacity: 0.3; 
+    opacity: 0.3;
   }
   90% { 
-    opacity: 0.3; 
+    opacity: 0.3;
   }
   100% { 
-    transform: translate(var(--moveX), var(--moveY)) rotate(var(--rotate));
+    transform: translate(var(--move-x), var(--move-y)) rotate(var(--rotate)) scale(1.2);
     opacity: 0;
   }
 }
 
-/* Triangle styling */
-.triangle {
+/* Triangle Elements */
+#events-screen .triangle {
   position: absolute;
+  width: 15px;
+  height: 15px;
   background: rgba(255, 255, 255, 0.15);
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
 }
 
-/* Event Button - Gold Glowing */
+/* Event Button - Gold Animation */
 #events-btn {
   background: linear-gradient(145deg, #FFD700, #FFA500, #FFD700) !important;
   border: 2px solid #FFD700 !important;
   color: #000 !important;
   font-weight: bold !important;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 
-              0 0 40px rgba(255, 215, 0, 0.5),
-              inset 0 0 15px rgba(255, 255, 255, 0.6) !important;
-  animation: goldPulse 1.2s ease-in-out infinite !important;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.8),
+    0 0 40px rgba(255, 215, 0, 0.5),
+    inset 0 0 15px rgba(255, 255, 255, 0.6) !important;
+  animation: 
+    goldPulse 1.2s ease-in-out infinite,
+    goldShine 3s linear infinite !important;
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transition: all 0.3s ease !important;
 }
 
-/* Gold Pulse Animation */
+/* Gold Pulse Effect */
 @keyframes goldPulse {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 
-                0 0 40px rgba(255, 215, 0, 0.5),
-                inset 0 0 15px rgba(255, 255, 255, 0.6);
     transform: translateX(0);
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.8),
+      0 0 40px rgba(255, 215, 0, 0.5),
+      inset 0 0 15px rgba(255, 255, 255, 0.6);
   }
   50% {
-    box-shadow: 0 0 30px rgba(255, 215, 0, 1), 
-                0 0 60px rgba(255, 215, 0, 0.7),
-                inset 0 0 25px rgba(255, 255, 255, 0.9);
     transform: translateX(-10px);
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 1),
+      0 0 60px rgba(255, 215, 0, 0.7),
+      inset 0 0 25px rgba(255, 255, 255, 0.9);
   }
 }
 
 /* Gold Shine Effect */
-#events-btn::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.4) 50%,
-    transparent 70%
-  );
-  transform: rotate(45deg);
-  animation: goldShine 2.5s linear infinite;
-  z-index: -1;
-}
-
 @keyframes goldShine {
   0% {
-    transform: translateX(-100%) rotate(45deg);
+    background-position: -200px 0;
   }
   100% {
-    transform: translateX(100%) rotate(45deg);
+    background-position: 200px 0;
   }
 }
 
-/* Hover Effect - Faster Animation */
+/* Hover Effects */
 #events-btn:hover {
-  animation: goldPulseFast 0.6s ease-in-out infinite !important;
+  animation: 
+    goldPulseFast 0.6s ease-in-out infinite,
+    goldShine 1.5s linear infinite !important;
   transform: translateX(-12px) scale(1.08) !important;
-  box-shadow: 0 0 35px rgba(255, 215, 0, 1), 
-              0 0 70px rgba(255, 215, 0, 0.8),
-              0 0 100px rgba(255, 215, 0, 0.4),
-              inset 0 0 30px rgba(255, 255, 255, 0.8) !important;
 }
 
 @keyframes goldPulseFast {
   0%, 100% {
-    box-shadow: 0 0 25px rgba(255, 215, 0, 1), 
-                0 0 50px rgba(255, 215, 0, 0.7),
-                0 0 75px rgba(255, 215, 0, 0.4),
-                inset 0 0 20px rgba(255, 255, 255, 0.8);
+    box-shadow: 
+      0 0 25px rgba(255, 215, 0, 1),
+      0 0 50px rgba(255, 215, 0, 0.7),
+      inset 0 0 20px rgba(255, 255, 255, 0.8);
   }
   50% {
-    box-shadow: 0 0 40px rgba(255, 215, 0, 1), 
-                0 0 80px rgba(255, 215, 0, 0.9),
-                0 0 120px rgba(255, 215, 0, 0.6),
-                inset 0 0 35px rgba(255, 255, 255, 1);
+    box-shadow: 
+      0 0 40px rgba(255, 215, 0, 1),
+      0 0 80px rgba(255, 215, 0, 0.9),
+      inset 0 0 35px rgba(255, 255, 255, 1);
   }
 }
 
-/* Click Effect */
-#events-btn:active {
-  transform: translateX(-15px) scale(0.95) !important;
-  box-shadow: 0 0 50px rgba(255, 215, 0, 1), 
-              0 0 90px rgba(255, 215, 0, 0.9),
-              0 0 130px rgba(255, 215, 0, 0.7),
-              inset 0 0 40px rgba(255, 255, 255, 1) !important;
-  animation: none !important;
+/* Event Images */
+#events-screen img {
+  width: 95%;
+  max-width: 400px;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 15px;
 }
+
+/* Event Header */
+#events-screen h2 {
+  font-size: 20px;
+  color: #FFD700;
+  text-shadow: 0 2px 5px rgba(255, 215, 0, 0.5);
+  margin: 15px 0;
+  text-align: center;
+}
+
+/* Events Container */
+#events-screen > div:first-child {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Triangles Container */
+#triangles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+  
 
 </style>
 </head>
@@ -2625,56 +2651,38 @@ body {
 
 
 
-<!-- Events Screen -->
+<!-- Events Screen - Blue Background with Floating Triangles -->
 <div id="events-screen" style="display: none; width: 100vw; height: 100vh; position: fixed; top: 0; left: 0; z-index: 1000; color: white;">
   <button class="back-btn" id="back-events">Home</button>
   
+  <!-- Main Content -->
   <div style="position: relative; z-index: 1; width: 100%; margin: 0 auto; padding: 10px; text-align: center;">
-    <!-- Events Header -->
+    <!-- Small Header -->
     <div style="margin: 15px 0;">
       <h2 style="font-size: 20px; color: #FFD700; text-shadow: 0 2px 5px rgba(255, 215, 0, 0.5);">Event များ</h2>
     </div>
     
-    <!-- Events Images Container -->
+    <!-- Events Images (5 images, one per row) -->
     <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px;">
-      <!-- Event 1 -->
       <div>
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-             alt="Event 1" 
-             style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 1" style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
       </div>
-      
-      <!-- Event 2 -->
       <div>
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-             alt="Event 2" 
-             style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 2" style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
       </div>
-      
-      <!-- Event 3 -->
       <div>
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-             alt="Event 3" 
-             style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 3" style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
       </div>
-      
-      <!-- Event 4 -->
       <div>
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-             alt="Event 4" 
-             style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 4" style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
       </div>
-      
-      <!-- Event 5 -->
       <div>
-        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" 
-             alt="Event 5" 
-             style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
+        <img src="https://i.ibb.co/zWJwB8bn/Grid-Art-20251204-175515291.jpg" alt="Event 5" style="width: 95%; max-width: 400px; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 8px;">
       </div>
     </div>
   </div>
   
-  <!-- Background Triangles Container -->
+  <!-- Floating Triangles Container -->
   <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;" id="triangles-container"></div>
 </div>
 
@@ -9908,85 +9916,42 @@ if (typeof saveUserData !== 'undefined') {
 
 
    
-// ===== EVENTS SCREEN SYSTEM =====
-
-// DOM Elements
+// EVENTS SYSTEM SCRIPT
 const eventsBtn = document.getElementById('events-btn');
 const eventsScreen = document.getElementById('events-screen');
 const backEventsBtn = document.getElementById('back-events');
 
-// Event Button ကို Sidebar ထဲထည့်ရန် (sidebar-buttons div အတွင်း)
-const sidebarButtons = document.getElementById('sidebar-buttons');
-if (sidebarButtons && !document.getElementById('events-btn')) {
-  const eventsButtonHTML = `
-    <button class="sidebar-btn" id="events-btn">
-      <span style="text-shadow: 0 1px 3px rgba(0,0,0,0.5); font-weight: bold;">✨ Event များ</span>
-    </button>
-  `;
-  // Coins Box button နောက်မှာထည့်ရန်
-  const eventBtn = document.getElementById('event-btn');
-  if (eventBtn) {
-    eventBtn.insertAdjacentHTML('afterend', eventsButtonHTML);
-  } else {
-    sidebarButtons.insertAdjacentHTML('beforeend', eventsButtonHTML);
-  }
-}
+// Navigation
+eventsBtn.addEventListener('click', ()=>{
+  mainScreen.style.display='none';
+  eventsScreen.style.display='block';
+  createTriangles();
+});
 
-// Navigation Functions
-if (eventsBtn) {
-  eventsBtn.addEventListener('click', () => {
-    if (mainScreen) mainScreen.style.display = 'none';
-    if (eventsScreen) {
-      eventsScreen.style.display = 'block';
-      startBackgroundAnimation();
-      createTriangles();
-    }
-  });
-}
+backEventsBtn.addEventListener('click', ()=>{
+  eventsScreen.style.display='none';
+  mainScreen.style.display='block';
+});
 
-if (backEventsBtn) {
-  backEventsBtn.addEventListener('click', () => {
-    if (eventsScreen) eventsScreen.style.display = 'none';
-    if (mainScreen) mainScreen.style.display = 'block';
-  });
-}
-
-// Background Animation
-function startBackgroundAnimation() {
-  if (eventsScreen) {
-    eventsScreen.style.animation = 'gradientFlow 8s ease infinite';
-  }
-}
-
-// Create Multiple Small Triangles
+// Create Triangles
 function createTriangles() {
   const container = document.getElementById('triangles-container');
   if (!container) return;
   
-  // Clear existing triangles
   container.innerHTML = '';
   
-  // Create 30 small triangles
   for (let i = 0; i < 30; i++) {
     const triangle = document.createElement('div');
     triangle.className = 'triangle';
     
-    // Random size between 8-20px
     const size = Math.random() * 12 + 8;
-    
-    // Random position
     const posX = Math.random() * 100;
     const posY = Math.random() * 100;
-    
-    // Random movement
     const moveX = (Math.random() * 150 - 75) + 'px';
     const moveY = (Math.random() * 150 - 75) + 'px';
     const rotate = Math.random() * 360 + 'deg';
-    
-    // Random duration between 4-10 seconds
     const duration = Math.random() * 6 + 4;
     
-    // Apply styles
     triangle.style.cssText = `
       width: ${size}px;
       height: ${size}px;
@@ -10003,25 +9968,8 @@ function createTriangles() {
   }
 }
 
-// Event Button Click Effect
-document.addEventListener('click', function(e) {
-  if (e.target && e.target.id === 'events-btn') {
-    // Add extra click effect
-    const btn = e.target;
-    btn.style.animation = 'none';
-    
-    setTimeout(() => {
-      if (btn.id === 'events-btn') {
-        btn.style.animation = 'goldPulse 1.2s ease-in-out infinite';
-      }
-    }, 300);
-  }
-});
-
-// Initialize triangles when page loads
+// Start
 setTimeout(createTriangles, 100);
-    
-  
 
 
 
