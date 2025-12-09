@@ -10314,7 +10314,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ===== VIP CD EVENT SYSTEM - တစ်ခါဝယ် အမြဲသုံးရန် =====
+// ===== VIP CD EVENT SYSTEM - COMPLETE VERSION WITH GITHUB PAGES MP3 =====
 
 // CD Event Variables
 let currentCD = null;
@@ -10326,9 +10326,7 @@ let selectedCDForConfirmation = null;
 let vipCodeEntered = false;
 let purchasedCDs = [1]; // CD 1 က အလကားရတာမို့ အရင်ကတည်းက ဝယ်ပြီးသား
 
-// ===== VIP CD EVENT SYSTEM - WITH GITHUB PAGES MP3 FILES =====
-
-// CD Configuration with GitHub Pages links
+// CD Configuration with GitHub Pages MP3 links
 const CD_CONFIG = {
   1: {
     name: "CD 1",
@@ -10337,7 +10335,7 @@ const CD_CONFIG = {
     music: "https://starlar1.github.io/Event1/[Blue_Archive]__優しさの記憶_____Memories_of_Kindness__-_Blue_Archive_Ending_Credit_Video__Subtitled_(144p).mp3",
     cost: 0,
     coins: 300,
-    duration: 5 * 60 * 60 * 1000
+    duration: 5 * 60 * 60 * 1000 // 5 နာရီ
   },
   2: {
     name: "CD 2",
@@ -10365,6 +10363,43 @@ const VIP_CONFIG = {
   accessGranted: false,
   telegramLink: "https://t.me/Starlar1"
 };
+
+// မြန်မာလို Audio Error Handling Function
+function handleAudioError(audioElement, cdNumber) {
+  const cdNames = {
+    1: "Memories of Kindness",
+    2: "Target for Love", 
+    3: "Our Quest"
+  };
+  
+  audioElement.onerror = function() {
+    console.error(`❌ ${cdNames[cdNumber]} MP3 ဖိုင်ကို ဖွင့်ရာတွင် ပြဿနာရှိနေ`);
+    
+    // Alternative MP3 source ကိုကြိုးစားကြည့်မယ်
+    const alternativeSources = [
+      `https://starlar1.github.io/Event1/cd${cdNumber}.mp3`,
+      `https://starlar1.github.io/Event1/CD${cdNumber}.mp3`,
+      `https://raw.githubusercontent.com/Starlar1/Event1/main/[Blue_Archive]_${cdNames[cdNumber].replace(/ /g, '_')}.mp3`
+    ];
+    
+    let currentSourceIndex = 0;
+    
+    function tryNextSource() {
+      if (currentSourceIndex < alternativeSources.length) {
+        audioElement.src = alternativeSources[currentSourceIndex];
+        audioElement.load();
+        currentSourceIndex++;
+      } else {
+        console.error("ဂီတဖိုင်အားလုံးကို ကြိုးစားကြည့်ပြီးပါပြီ။ ဖိုင်မရှိပါ။");
+      }
+    }
+    
+    audioElement.oncanplaythrough = tryNextSource;
+    audioElement.onerror = tryNextSource;
+    
+    tryNextSource();
+  };
+}
 
 // CD Event Screen HTML Elements တွေဖန်တီးမယ်
 function createCDEventElements() {
@@ -10407,10 +10442,20 @@ function createCDEventElements() {
           <div style="font-size:12px; margin-top:10px; color:#90ee90;">ရရှိမည့်ငွေကြေး: <span id="cd-coins-reward">0</span></div>
         </div>
         
+        <!-- Music Status -->
+        <div id="music-status" style="font-size:12px; color:#ffcc00; margin:10px 0; display:none;">
+          🎵 ဂီတဖွင့်နေဆဲ...
+        </div>
+        
         <!-- Claim Button -->
         <button id="claim-cd-coins" class="btn" style="padding:12px 30px; font-size:16px; display:none; margin:20px auto; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">
           ငွေကြေးရယူမည်
         </button>
+        
+        <!-- Music Error Message -->
+        <div id="music-error" style="display:none; background:rgba(255,0,0,0.2); color:#ff6b6b; padding:10px; border-radius:8px; margin-top:15px; font-size:12px;">
+          ⚠️ ဂီတဖိုင်တွင် ပြဿနာရှိနေပါသည်။ ငွေကြေးယူခြင်းကိုဆက်လက်လုပ်ဆောင်နိုင်ပါသည်။
+        </div>
       </div>
     </div>
   `;
@@ -10498,7 +10543,7 @@ function createCDEventElements() {
     </div>
   `;
   
-  // CD SELECTION SCREEN (CD ရွေးမယ့်စခရင် - ဒီမှာပြင်ရမယ်)
+  // CD SELECTION SCREEN (CD ရွေးမယ့်စခရင်)
   const cdSelectionScreen = document.createElement('div');
   cdSelectionScreen.id = 'cd-selection-screen';
   cdSelectionScreen.style.cssText = `
@@ -10531,7 +10576,7 @@ function createCDEventElements() {
           <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
             <img src="https://i.ibb.co/6JPvKxkC/Grid-Art-20251207-165928377.png" alt="CD 1" style="width:60px; height:60px; border-radius:50%;">
             <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 1</h3>
+              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 1 - Memories of Kindness</h3>
               <div id="cd1-status" style="display:flex; align-items:center; gap:5px;">
                 <p style="font-size:12px; opacity:0.8; margin:0;">အလကား</p>
               </div>
@@ -10546,7 +10591,7 @@ function createCDEventElements() {
           <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
             <img src="https://i.ibb.co/N0gfLw9/Grid-Art-20251207-165857458.png" alt="CD 2" style="width:60px; height:60px; border-radius:50%;">
             <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 2</h3>
+              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 2 - Target for Love</h3>
               <div id="cd2-status" style="display:flex; align-items:center; gap:5px;">
                 <p style="font-size:12px; opacity:0.8; margin:0;">၁၀၀၀ ငွေကြေး</p>
               </div>
@@ -10561,7 +10606,7 @@ function createCDEventElements() {
           <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
             <img src="https://i.ibb.co/Q3PKvngv/Grid-Art-20251207-170147460.png" alt="CD 3" style="width:60px; height:60px; border-radius:50%;">
             <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 3</h3>
+              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 3 - Our Quest</h3>
               <div id="cd3-status" style="display:flex; align-items:center; gap:5px;">
                 <p style="font-size:12px; opacity:0.8; margin:0;">၂၀၀၀ ငွေကြေး</p>
               </div>
@@ -10667,6 +10712,27 @@ function initializeCDEvent() {
   
   // ရှိပြီးသား CD ကိုစစ်မယ်
   checkAndStartExistingCD();
+  
+  // MP3 Files တွေရရှိမရှိ စစ်ဆေးမယ်
+  checkMP3FilesAvailability();
+}
+
+// MP3 Files တွေရရှိမရှိ စစ်ဆေးမယ်
+async function checkMP3FilesAvailability() {
+  console.log("🎵 MP3 Files များ ရရှိမရှိ စစ်ဆေးနေပါတယ်...");
+  
+  for (const [cdNumber, config] of Object.entries(CD_CONFIG)) {
+    try {
+      const response = await fetch(config.music, { method: 'HEAD' });
+      if (response.ok) {
+        console.log(`✅ CD ${cdNumber}: "${config.name}" MP3 file ရရှိပါတယ်`);
+      } else {
+        console.warn(`⚠️ CD ${cdNumber}: "${config.name}" MP3 file မရှိပါ`);
+      }
+    } catch (error) {
+      console.error(`❌ CD ${cdNumber}: "${config.name}" MP3 file စစ်ဆေးရာတွင် ပြဿနာရှိ - ${error.message}`);
+    }
+  }
 }
 
 // localStorage ကနေ ဝယ်ပြီးသား CD တွေကို ဖတ်မယ်
@@ -10921,7 +10987,7 @@ function showConfirmation(cdNumber) {
   const confirmText = document.getElementById('confirm-cd-text');
   
   confirmImage.src = cdConfig.png;
-  confirmText.textContent = `CD ${cdNumber} ကို ${cdConfig.cost} ငွေကြေးဖြင့် ဝယ်မည်လား?\n၅ နာရီကြာပြီးနောက် ${cdConfig.coins} ငွေကြေးရရှိမည်။\n(တစ်ခါဝယ်ပြီးရင် အမြဲသုံးနိုင်ပါမည်)`;
+  confirmText.textContent = `CD ${cdNumber} - ${cdConfig.name.split(' - ')[1]} ကို ${cdConfig.cost} ငွေကြေးဖြင့် ဝယ်မည်လား?\n၅ နာရီကြာပြီးနောက် ${cdConfig.coins} ငွေကြေးရရှိမည်။\n(တစ်ခါဝယ်ပြီးရင် အမြဲသုံးနိုင်ပါမည်)`;
   
   document.getElementById('cd-confirmation-screen').style.display = 'block';
 }
@@ -11082,6 +11148,15 @@ function startCDEvent() {
   const cdTitle = document.getElementById('cd-title');
   const cdImage = document.getElementById('cd-image');
   const cdCoinsReward = document.getElementById('cd-coins-reward');
+  const musicStatus = document.getElementById('music-status');
+  const musicError = document.getElementById('music-error');
+  
+  // Reset error messages
+  if (musicError) musicError.style.display = 'none';
+  if (musicStatus) {
+    musicStatus.style.display = 'block';
+    musicStatus.textContent = '🎵 ဂီတစတင်ဖွင့်နေပါသည်...';
+  }
   
   cdEventScreen.style.backgroundImage = `url('${cdConfig.background}')`;
   cdImage.src = cdConfig.png;
@@ -11099,6 +11174,7 @@ function startCDEvent() {
   // CD event screen ကိုပြမယ်
   cdEventScreen.style.display = 'block';
   
+  // MP3 ဂီတဖွင့်မယ်
   playCDMusic();
   
   updateCDTimer();
@@ -11126,6 +11202,12 @@ function updateCDTimer() {
     if (claimButton) claimButton.style.display = 'block';
     
     stopCDMusic();
+    
+    // Music status ကိုပြောင်းမယ်
+    const musicStatus = document.getElementById('music-status');
+    if (musicStatus) {
+      musicStatus.textContent = '✅ ဂီတပြီးဆုံးပါပြီ';
+    }
   } else {
     const hours = Math.floor(remaining / (1000 * 60 * 60));
     const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
@@ -11139,6 +11221,13 @@ function updateCDTimer() {
     timerDisplay.style.color = "#ffcc00";
     if (statusText) statusText.textContent = `⏳ ${cdConfig.name} ဖွင့်နေဆဲ...`;
     if (claimButton) claimButton.style.display = 'none';
+    
+    // Music status update
+    const musicStatus = document.getElementById('music-status');
+    if (musicStatus) {
+      const percentComplete = Math.round((elapsed / cdConfig.duration) * 100);
+      musicStatus.textContent = `🎵 ဂီတဖွင့်နေဆဲ (${percentComplete}%)`;
+    }
   }
 }
 
@@ -11168,18 +11257,104 @@ function playCDMusic() {
   
   const cdConfig = CD_CONFIG[currentCD];
   
+  // အရင်ဖွင့်ထားတဲ့ဂီတရှိရင် ပိတ်မယ်
   if (cdMusic) {
     cdMusic.pause();
     cdMusic = null;
   }
   
+  // MP3 ဖိုင်ကိုဖွင့်မယ်
   cdMusic = new Audio(cdConfig.music);
   cdMusic.loop = true;
   cdMusic.volume = 0.5;
   
+  // Error handling ထည့်မယ်
+  handleAudioError(cdMusic, currentCD);
+  
+  // MP3 ဖိုင်ဖွင့်တဲ့အခါ
+  cdMusic.addEventListener('canplaythrough', () => {
+    console.log(`✅ CD ${currentCD} MP3 ဖိုင်ကို ဖွင့်နိုင်ပါပြီ`);
+    const musicStatus = document.getElementById('music-status');
+    if (musicStatus) {
+      musicStatus.textContent = '🎵 ဂီတဖွင့်နေဆဲ...';
+    }
+    
+    const musicError = document.getElementById('music-error');
+    if (musicError) {
+      musicError.style.display = 'none';
+    }
+  });
+  
+  // MP3 ဖိုင်မရှိရင်
+  cdMusic.addEventListener('error', (e) => {
+    console.error(`❌ CD ${currentCD} MP3 ဖိုင်ဖွင့်ရာတွင် ပြဿနာရှိနေ:`, e);
+    
+    const musicStatus = document.getElementById('music-status');
+    if (musicStatus) {
+      musicStatus.textContent = '⚠️ ဂီတဖိုင်တွင် ပြဿနာရှိနေပါသည်';
+      musicStatus.style.color = '#ff6b6b';
+    }
+    
+    const musicError = document.getElementById('music-error');
+    if (musicError) {
+      musicError.style.display = 'block';
+    }
+    
+    // Alternative source ကိုကြိုးစားကြည့်မယ်
+    tryAlternativeMusicSource(currentCD);
+  });
+  
+  // ဂီတဖွင့်ကြည့်မယ်
   cdMusic.play().catch(e => {
     console.log('ဂီတဖွင့်ရာတွင် ပြဿနာရှိနေ:', e);
+    
+    // User interaction required error ဆိုရင်
+    if (e.name === 'NotAllowedError') {
+      const musicStatus = document.getElementById('music-status');
+      if (musicStatus) {
+        musicStatus.textContent = '🔇 ဂီတကို မဖွင့်ရသေးပါ (အသံခွင့်ပြုချက်လိုအပ်သည်)';
+        musicStatus.style.color = '#ffcc00';
+      }
+    }
   });
+}
+
+// Alternative music source ကိုကြိုးစားကြည့်မယ်
+function tryAlternativeMusicSource(cdNumber) {
+  const alternatives = {
+    1: [
+      "https://starlar1.github.io/Event1/cd1.mp3",
+      "https://starlar1.github.io/Event1/CD1.mp3",
+      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd1.mp3"
+    ],
+    2: [
+      "https://starlar1.github.io/Event1/cd2.mp3",
+      "https://starlar1.github.io/Event1/CD2.mp3",
+      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd2.mp3"
+    ],
+    3: [
+      "https://starlar1.github.io/Event1/cd3.mp3",
+      "https://starlar1.github.io/Event1/CD3.mp3",
+      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd3.mp3"
+    ]
+  };
+  
+  console.log(`🔄 CD ${cdNumber} အတွက် alternative MP3 sources ကိုကြိုးစားကြည့်နေပါတယ်...`);
+  
+  // လက်ရှိ CD_CONFIG ကို alternative sources နဲ့ update လုပ်မယ်
+  const altSources = alternatives[cdNumber];
+  if (altSources && altSources.length > 0) {
+    // ပထမဆုံး alternative ကိုသုံးမယ်
+    CD_CONFIG[cdNumber].music = altSources[0];
+    console.log(`🔄 CD ${cdNumber} MP3 source ကို alternative သို့ပြောင်းလိုက်ပါပြီ: ${altSources[0]}`);
+    
+    // MP3 ပြန်ဖွင့်ကြည့်မယ်
+    if (cdMusic) {
+      cdMusic.src = altSources[0];
+      cdMusic.load();
+      cdMusic.play().catch(e => console.log('Alternative source ဖွင့်ရာတွင် ပြဿနာရှိ:', e));
+    }
+  }
 }
 
 // CD ဂီတကိုရပ်မယ်
@@ -11256,6 +11431,16 @@ function modifyEventsBackButton() {
 document.addEventListener('DOMContentLoaded', function() {
   initializeCDEvent();
   modifyEventsBackButton();
+  
+  // MP3 files တွေကို preload လုပ်မယ် (optional)
+  console.log("🎵 MP3 Files တွေကို ကြိုတင်ဖွင့်နေပါတယ်...");
+  setTimeout(() => {
+    for (let i = 1; i <= 3; i++) {
+      const audio = new Audio();
+      audio.src = CD_CONFIG[i].music;
+      audio.preload = 'metadata';
+    }
+  }, 2000);
 });
 
  </script>
