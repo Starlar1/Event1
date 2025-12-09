@@ -10332,7 +10332,7 @@ const CD_CONFIG = {
     name: "CD 1 - Memories of Kindness",
     background: "https://i.ibb.co/nMKgKPW5/Grid-Art-20251204-174508065.jpg",
     png: "https://i.ibb.co/6JPvKxkC/Grid-Art-20251207-165928377.png",
-    music: "https://starlar1.github.io/Event1/[Blue_Archive]__優しさの記憶_____Memories_of_Kindness__-_Blue_Archive_Ending_Credit_Video__Subtitled_(144p).mp3",
+    music: "https://starlar1.github.io/SC-Event-Season-3/[Blue_Archive]__優しさの記憶_____Memories_of_Kindness__-_Blue_Archive_Ending_Credit_Video__Subtitled_(144p).mp3",
     cost: 0,
     coins: 300,
     duration: 5 * 60 * 60 * 1000 // 5 နာရီ
@@ -10341,7 +10341,7 @@ const CD_CONFIG = {
     name: "CD 2 - Target for Love",
     background: "https://i.ibb.co/QvmWRjwG/Grid-Art-20251204-174452120.jpg",
     png: "https://i.ibb.co/N0gfLw9/Grid-Art-20251207-165857458.png",
-    music: "https://starlar1.github.io/Event1/[Blue_Archive]_Main_OST__Target_for_love__Full_ver.(256k).mp3",
+    music: "https://starlar1.github.io/SC-Event-Season-3/[Blue_Archive]_Main_OST__Target_for_love__Full_ver.(256k).mp3",
     cost: 1000,
     coins: 600,
     duration: 5 * 60 * 60 * 1000
@@ -10350,7 +10350,7 @@ const CD_CONFIG = {
     name: "CD 3 - Our Quest",
     background: "https://i.ibb.co/99hYBTss/Grid-Art-20251205-164803283.jpg",
     png: "https://i.ibb.co/Q3PKvngv/Grid-Art-20251207-170147460.png",
-    music: "https://starlar1.github.io/Event1/[Blue_Archive]_Watashitachi_No_Quest_Music_Video___Our_Quest(256k).mp3",
+    music: "https://starlar1.github.io/SC-Event-Season-3/[Blue_Archive]_Watashitachi_No_Quest_Music_Video___Our_Quest(256k).mp3",
     cost: 2000,
     coins: 1000,
     duration: 5 * 60 * 60 * 1000
@@ -10386,7 +10386,7 @@ function createCDEventElements() {
   cdEventScreen.innerHTML = `
     <div class="cd-container" style="position:relative; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; background:rgba(0,0,0,0.6);">
       <button class="back-btn" id="back-cd-event" style="position:absolute; top:20px; left:20px; padding:8px 16px; font-size:14px; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; display:flex; align-items:center; z-index:5;">
-        <span style="margin-right:6px; font-size:16px;">←</span> နောက်သို့
+        <span style="margin-right:6px; font-size:16px;"></span> နောက်သို့
       </button>
       
       <div style="text-align:center; margin-top:80px; color:white;">
@@ -10400,9 +10400,9 @@ function createCDEventElements() {
         
         <!-- Timer Display -->
         <div id="cd-timer" style="background:rgba(0,0,0,0.7); padding:15px; border-radius:10px; margin:20px auto; max-width:300px;">
-          <div style="font-size:16px; margin-bottom:10px;">⏳ ကျန်ရှိနေသောအချိန်</div>
+          <div style="font-size:16px; margin-bottom:10px;">ကျန်ရှိနေသောအချိန်</div>
           <div id="timer-display" style="font-size:24px; font-weight:bold; color:#ffcc00;">05:00:00</div>
-          <div style="font-size:12px; margin-top:10px; color:#90ee90;">ရရှိမည့်ငွေကြေး: <span id="cd-coins-reward">0</span></div>
+          <div style="font-size:12px; margin-top:10px; color:#90ee90;">ရရှိမည့်Coins: <span id="cd-coins-reward">0</span></div>
         </div>
         
         <!-- Music Status -->
@@ -10412,7 +10412,7 @@ function createCDEventElements() {
         
         <!-- Claim Button -->
         <button id="claim-cd-coins" class="btn" style="padding:12px 30px; font-size:16px; display:none; margin:20px auto; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">
-          ငွေကြေးရယူမည်
+          Coins ရယူမည်
         </button>
         
         <!-- Music Error Message -->
@@ -10444,7 +10444,7 @@ function createCDEventElements() {
     <div style="position:relative; width:100%; height:100%;">
       <!-- Back Button -->
       <button class="back-btn" id="back-cd-start" style="position:absolute; top:20px; left:20px; padding:8px 16px; font-size:14px; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; display:flex; align-items:center; z-index:5;">
-        <span style="margin-right:6px; font-size:16px;">←</span> နောက်သို့
+        <span style="margin-right:6px; font-size:16px;"></span> နောက်သို့
       </button>
       
       <!-- Start Button at Bottom -->
@@ -10484,7 +10484,7 @@ function createCDEventElements() {
       <!-- VIP Access Content -->
       <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:white; width:90%; max-width:350px;">
         <h2 style="font-size:28px; margin-bottom:20px; text-shadow:0 2px 4px rgba(0,0,0,0.5); color:gold;">VIP Access</h2>
-        <p style="font-size:14px; margin-bottom:25px; opacity:0.8;">CD Event သို့ဝင်ရန် VIP Code ထည့်ပါ</p>
+        <p style="font-size:14px; margin-bottom:25px; opacity:0.8;">Event သို့ဝင်ရန် VIP Code ထည့်ပါ</p>
         
         <!-- VIP Code Input -->
         <div style="background:rgba(0,0,0,0.7); padding:20px; border-radius:12px; margin-bottom:20px;">
@@ -10528,7 +10528,7 @@ function createCDEventElements() {
     <div style="position:relative; width:100%; min-height:100%; padding:20px; display:flex; flex-direction:column; align-items:center;">
       <!-- Back Button -->
       <button class="back-btn" id="back-cd-selection" style="position:absolute; top:20px; left:20px; padding:8px 16px; font-size:14px; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; display:flex; align-items:center; z-index:5;">
-        <span style="margin-right:6px; font-size:16px;">←</span> နောက်သို့
+        <span style="margin-right:6px; font-size:16px;"></span> နောက်သို့
       </button>
       
       <!-- CD Selection Content - သေးအောင်ပြင်ထားတယ် -->
@@ -10547,8 +10547,8 @@ function createCDEventElements() {
             </div>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:12px; color:#90ee90;">အလကား</span>
-            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၃၀၀</span>
+            <span style="font-size:12px; color:#90ee90;">Free</span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = 300 Coins ရရှိမည်</span>
           </div>
           <button class="select-cd-btn" data-cd="1" style="width:100%; padding:8px; background:#28a745; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
         </div>
@@ -10565,8 +10565,8 @@ function createCDEventElements() {
             </div>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:12px; color:#ff6b6b;">၁၀၀၀ ငွေကြေး</span>
-            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၆၀၀</span>
+            <span style="font-size:12px; color:#ff6b6b;">၁၀၀၀ Coins</span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = 600 Coins ရရှ်ိမည်</span>
           </div>
           <button class="select-cd-btn" data-cd="2" style="width:100%; padding:8px; background:#007bff; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
         </div>
@@ -10583,15 +10583,15 @@ function createCDEventElements() {
             </div>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-            <span style="font-size:12px; color:#ff6b6b;">၂၀၀၀ ငွေကြေး</span>
-            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၁၀၀၀</span>
+            <span style="font-size:12px; color:#ff6b6b;">၂၀၀၀ Coins </span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = 1000 Coins ရရှိမည်</span>
           </div>
           <button class="select-cd-btn" data-cd="3" style="width:100%; padding:8px; background:#6f42c1; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
         </div>
         
         <!-- Note -->
         <div style="margin-top:20px; font-size:11px; color:#aaa; padding:10px; background:rgba(0,0,0,0.5); border-radius:8px;">
-          <p style="margin:0;">💡 တစ်ခါဝယ်ပြီးရင် အမြဲသုံးနိုင်ပါသည်</p>
+          <p style="margin:0;">တစ်ခါဝယ်ပြီးရင် အမြဲသုံးနိုင်ပါသည်</p>
         </div>
       </div>
     </div>
@@ -11127,7 +11127,7 @@ function startCDEvent() {
   if (musicError) musicError.style.display = 'none';
   if (musicStatus) {
     musicStatus.style.display = 'block';
-    musicStatus.textContent = '🎵 ဂီတစတင်ဖွင့်နေပါသည်...';
+    musicStatus.textContent = 'ပွဲစတင်ပြုလုပ်နေပါသည်...';
   }
   
   cdEventScreen.style.backgroundImage = `url('${cdConfig.background}')`;
@@ -11170,7 +11170,7 @@ function updateCDTimer() {
   if (remaining <= 0) {
     timerDisplay.textContent = "00:00:00";
     timerDisplay.style.color = "#90ee90";
-    if (statusText) statusText.textContent = "🎉 ငွေကြေးယူဖို့ အဆင်သင့်ဖြစ်ပါပြီ!";
+    if (statusText) statusText.textContent = "Coins ယူဖို့ အဆင်သင့်ဖြစ်ပါပြီ!";
     if (claimButton) claimButton.style.display = 'block';
     
     stopCDMusic();
@@ -11178,7 +11178,7 @@ function updateCDTimer() {
     // Music status ကိုပြောင်းမယ်
     const musicStatus = document.getElementById('music-status');
     if (musicStatus) {
-      musicStatus.textContent = '✅ ဂီတပြီးဆုံးပါပြီ';
+      musicStatus.textContent = ' ပွဲပြီးဆုံးပါပြီ';
     }
   } else {
     const hours = Math.floor(remaining / (1000 * 60 * 60));
@@ -11198,7 +11198,7 @@ function updateCDTimer() {
     const musicStatus = document.getElementById('music-status');
     if (musicStatus) {
       const percentComplete = Math.round((elapsed / cdConfig.duration) * 100);
-      musicStatus.textContent = `🎵 ဂီတဖွင့်နေဆဲ (${percentComplete}%)`;
+      musicStatus.textContent = ` ပွဲစတင်နေဆဲ (${percentComplete}%)`;
     }
   }
 }
@@ -11216,7 +11216,7 @@ function claimCDCoins() {
   saveGameState();
   saveCDState();
   
-  alert(`🎉 ဂုဏ်ယူပါတယ်! ${cdConfig.name} မှ ${cdConfig.coins} ငွေကြေးရရှိပါတယ်!`);
+  alert(`🎉 ဂုဏ်ယူပါတယ်! ${cdConfig.name} မှ ${cdConfig.coins} Coins ရရှိပါတယ်!`);
   
   resetCDEvent();
   
@@ -11245,7 +11245,7 @@ function playCDMusic() {
     console.log(`✅ CD ${currentCD} MP3 ဖိုင်ကို ဖွင့်နိုင်ပါပြီ`);
     const musicStatus = document.getElementById('music-status');
     if (musicStatus) {
-      musicStatus.textContent = '🎵 ဂီတဖွင့်နေဆဲ...';
+      musicStatus.textContent = 'ပွဲစတင်နေဆဲ...';
     }
     
     const musicError = document.getElementById('music-error');
