@@ -10314,7 +10314,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ===== VIP CD EVENT SYSTEM - COMPLETE VERSION WITH GITHUB PAGES MP3 =====
+// ===== VIP CD EVENT SYSTEM - UPDATED VERSION =====
 
 // CD Event Variables
 let currentCD = null;
@@ -10326,10 +10326,10 @@ let selectedCDForConfirmation = null;
 let vipCodeEntered = false;
 let purchasedCDs = [1]; // CD 1 က အလကားရတာမို့ အရင်ကတည်းက ဝယ်ပြီးသား
 
-// CD Configuration with GitHub Pages MP3 links
+// CD Configuration with Updated Song 3
 const CD_CONFIG = {
   1: {
-    name: "CD 1",
+    name: "CD 1 - Memories of Kindness",
     background: "https://i.ibb.co/nMKgKPW5/Grid-Art-20251204-174508065.jpg",
     png: "https://i.ibb.co/6JPvKxkC/Grid-Art-20251207-165928377.png",
     music: "https://starlar1.github.io/Event1/[Blue_Archive]__優しさの記憶_____Memories_of_Kindness__-_Blue_Archive_Ending_Credit_Video__Subtitled_(144p).mp3",
@@ -10338,7 +10338,7 @@ const CD_CONFIG = {
     duration: 5 * 60 * 60 * 1000 // 5 နာရီ
   },
   2: {
-    name: "CD 2",
+    name: "CD 2 - Target for Love",
     background: "https://i.ibb.co/QvmWRjwG/Grid-Art-20251204-174452120.jpg",
     png: "https://i.ibb.co/N0gfLw9/Grid-Art-20251207-165857458.png",
     music: "https://starlar1.github.io/Event1/[Blue_Archive]_Main_OST__Target_for_love__Full_ver.(256k).mp3",
@@ -10347,10 +10347,10 @@ const CD_CONFIG = {
     duration: 5 * 60 * 60 * 1000
   },
   3: {
-    name: "CD 3",
+    name: "CD 3 - Our Quest",
     background: "https://i.ibb.co/99hYBTss/Grid-Art-20251205-164803283.jpg",
     png: "https://i.ibb.co/Q3PKvngv/Grid-Art-20251207-170147460.png",
-    music: "https://starlar1.github.io/Event1/[Blue_Archive]_Watashitachi_No_Quest_Music_Video___Our_Quest(720p).mp3",
+    music: "https://starlar1.github.io/Event1/[Blue_Archive]_Watashitachi_No_Quest_Music_Video___Our_Quest(256k).mp3",
     cost: 2000,
     coins: 1000,
     duration: 5 * 60 * 60 * 1000
@@ -10363,43 +10363,6 @@ const VIP_CONFIG = {
   accessGranted: false,
   telegramLink: "https://t.me/Starlar1"
 };
-
-// မြန်မာလို Audio Error Handling Function
-function handleAudioError(audioElement, cdNumber) {
-  const cdNames = {
-    1: "Memories of Kindness",
-    2: "Target for Love", 
-    3: "Our Quest"
-  };
-  
-  audioElement.onerror = function() {
-    console.error(`❌ ${cdNames[cdNumber]} MP3 ဖိုင်ကို ဖွင့်ရာတွင် ပြဿနာရှိနေ`);
-    
-    // Alternative MP3 source ကိုကြိုးစားကြည့်မယ်
-    const alternativeSources = [
-      `https://starlar1.github.io/Event1/cd${cdNumber}.mp3`,
-      `https://starlar1.github.io/Event1/CD${cdNumber}.mp3`,
-      `https://raw.githubusercontent.com/Starlar1/Event1/main/[Blue_Archive]_${cdNames[cdNumber].replace(/ /g, '_')}.mp3`
-    ];
-    
-    let currentSourceIndex = 0;
-    
-    function tryNextSource() {
-      if (currentSourceIndex < alternativeSources.length) {
-        audioElement.src = alternativeSources[currentSourceIndex];
-        audioElement.load();
-        currentSourceIndex++;
-      } else {
-        console.error("ဂီတဖိုင်အားလုံးကို ကြိုးစားကြည့်ပြီးပါပြီ။ ဖိုင်မရှိပါ။");
-      }
-    }
-    
-    audioElement.oncanplaythrough = tryNextSource;
-    audioElement.onerror = tryNextSource;
-    
-    tryNextSource();
-  };
-}
 
 // CD Event Screen HTML Elements တွေဖန်တီးမယ်
 function createCDEventElements() {
@@ -10543,7 +10506,7 @@ function createCDEventElements() {
     </div>
   `;
   
-  // CD SELECTION SCREEN (CD ရွေးမယ့်စခရင်)
+  // CD SELECTION SCREEN (CD ရွေးမယ့်စခရင် - သေးအောင်ပြင်ထားတယ်)
   const cdSelectionScreen = document.createElement('div');
   cdSelectionScreen.id = 'cd-selection-screen';
   cdSelectionScreen.style.cssText = `
@@ -10558,62 +10521,77 @@ function createCDEventElements() {
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1003;
+    overflow-y: auto;
   `;
   
   cdSelectionScreen.innerHTML = `
-    <div style="position:relative; width:100%; height:100%;">
+    <div style="position:relative; width:100%; min-height:100%; padding:20px; display:flex; flex-direction:column; align-items:center;">
       <!-- Back Button -->
       <button class="back-btn" id="back-cd-selection" style="position:absolute; top:20px; left:20px; padding:8px 16px; font-size:14px; border:none; border-radius:6px; background:#007bff; color:white; cursor:pointer; display:flex; align-items:center; z-index:5;">
         <span style="margin-right:6px; font-size:16px;">←</span> နောက်သို့
       </button>
       
-      <!-- CD Selection Content -->
-      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; color:white; width:90%; max-width:400px; margin-top:20px;">
-        <h2 style="font-size:28px; margin-bottom:30px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">CD ရွေးချယ်ပါ</h2>
+      <!-- CD Selection Content - သေးအောင်ပြင်ထားတယ် -->
+      <div style="text-align:center; color:white; width:100%; max-width:320px; margin-top:60px;">
+        <h2 style="font-size:22px; margin-bottom:20px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">CD ရွေးချယ်ပါ</h2>
         
         <!-- CD 1 - အလကား -->
-        <div class="cd-option" data-cd="1" style="background:rgba(0,0,0,0.7); border-radius:15px; padding:20px; margin:15px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
-          <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-            <img src="https://i.ibb.co/6JPvKxkC/Grid-Art-20251207-165928377.png" alt="CD 1" style="width:60px; height:60px; border-radius:50%;">
-            <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 1 - Memories of Kindness</h3>
+        <div class="cd-option" data-cd="1" style="background:rgba(0,0,0,0.7); border-radius:12px; padding:15px; margin:12px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://i.ibb.co/6JPvKxkC/Grid-Art-20251207-165928377.png" alt="CD 1" style="width:50px; height:50px; border-radius:50%;">
+            <div style="text-align:left; flex:1;">
+              <h3 style="font-size:16px; margin:0 0 3px 0; color:gold;">CD 1</h3>
               <div id="cd1-status" style="display:flex; align-items:center; gap:5px;">
-                <p style="font-size:12px; opacity:0.8; margin:0;">အလကား</p>
+                <p style="font-size:11px; opacity:0.8; margin:0;">Memories of Kindness</p>
               </div>
             </div>
           </div>
-          <p style="font-size:14px; margin-bottom:15px; color:#ddd;">၅ နာရီပြည့်လျှင် ၃၀၀ ငွေကြေးရမည်</p>
-          <button class="select-cd-btn" data-cd="1" style="width:100%; padding:10px; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">သုံးမည်</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:12px; color:#90ee90;">အလကား</span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၃၀၀</span>
+          </div>
+          <button class="select-cd-btn" data-cd="1" style="width:100%; padding:8px; background:#28a745; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
         </div>
         
         <!-- CD 2 - ၁၀၀၀ ငွေကြေး -->
-        <div class="cd-option" data-cd="2" style="background:rgba(0,0,0,0.7); border-radius:15px; padding:20px; margin:15px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
-          <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-            <img src="https://i.ibb.co/N0gfLw9/Grid-Art-20251207-165857458.png" alt="CD 2" style="width:60px; height:60px; border-radius:50%;">
-            <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 2 - Target for Love</h3>
+        <div class="cd-option" data-cd="2" style="background:rgba(0,0,0,0.7); border-radius:12px; padding:15px; margin:12px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://i.ibb.co/N0gfLw9/Grid-Art-20251207-165857458.png" alt="CD 2" style="width:50px; height:50px; border-radius:50%;">
+            <div style="text-align:left; flex:1;">
+              <h3 style="font-size:16px; margin:0 0 3px 0; color:gold;">CD 2</h3>
               <div id="cd2-status" style="display:flex; align-items:center; gap:5px;">
-                <p style="font-size:12px; opacity:0.8; margin:0;">၁၀၀၀ ငွေကြေး</p>
+                <p style="font-size:11px; opacity:0.8; margin:0;">Target for Love</p>
               </div>
             </div>
           </div>
-          <p style="font-size:14px; margin-bottom:15px; color:#ddd;">၅ နာရီပြည့်လျှင် ၆၀၀ ငွေကြေးရမည်</p>
-          <button class="select-cd-btn" data-cd="2" style="width:100%; padding:10px; background:#007bff; color:white; border:none; border-radius:8px; cursor:pointer;">သုံးမည်</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:12px; color:#ff6b6b;">၁၀၀၀ ငွေကြေး</span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၆၀၀</span>
+          </div>
+          <button class="select-cd-btn" data-cd="2" style="width:100%; padding:8px; background:#007bff; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
         </div>
         
         <!-- CD 3 - ၂၀၀၀ ငွေကြေး -->
-        <div class="cd-option" data-cd="3" style="background:rgba(0,0,0,0.7); border-radius:15px; padding:20px; margin:15px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
-          <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-            <img src="https://i.ibb.co/Q3PKvngv/Grid-Art-20251207-170147460.png" alt="CD 3" style="width:60px; height:60px; border-radius:50%;">
-            <div style="text-align:left;">
-              <h3 style="font-size:18px; margin:0 0 5px 0; color:gold;">CD 3 - Our Quest</h3>
+        <div class="cd-option" data-cd="3" style="background:rgba(0,0,0,0.7); border-radius:12px; padding:15px; margin:12px 0; cursor:pointer; transition:all 0.3s ease; border:2px solid transparent;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <img src="https://i.ibb.co/Q3PKvngv/Grid-Art-20251207-170147460.png" alt="CD 3" style="width:50px; height:50px; border-radius:50%;">
+            <div style="text-align:left; flex:1;">
+              <h3 style="font-size:16px; margin:0 0 3px 0; color:gold;">CD 3</h3>
               <div id="cd3-status" style="display:flex; align-items:center; gap:5px;">
-                <p style="font-size:12px; opacity:0.8; margin:0;">၂၀၀၀ ငွေကြေး</p>
+                <p style="font-size:11px; opacity:0.8; margin:0;">Our Quest</p>
               </div>
             </div>
           </div>
-          <p style="font-size:14px; margin-bottom:15px; color:#ddd;">၅ နာရီပြည့်လျှင် ၁၀၀၀ ငွေကြေးရမည်</p>
-          <button class="select-cd-btn" data-cd="3" style="width:100%; padding:10px; background:#6f42c1; color:white; border:none; border-radius:8px; cursor:pointer;">သုံးမည်</button>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+            <span style="font-size:12px; color:#ff6b6b;">၂၀၀၀ ငွေကြေး</span>
+            <span style="font-size:12px; color:#ffcc00;">၅နာရီ = ၁၀၀၀</span>
+          </div>
+          <button class="select-cd-btn" data-cd="3" style="width:100%; padding:8px; background:#6f42c1; color:white; border:none; border-radius:6px; cursor:pointer; font-size:13px;">သုံးမည်</button>
+        </div>
+        
+        <!-- Note -->
+        <div style="margin-top:20px; font-size:11px; color:#aaa; padding:10px; background:rgba(0,0,0,0.5); border-radius:8px;">
+          <p style="margin:0;">💡 တစ်ခါဝယ်ပြီးရင် အမြဲသုံးနိုင်ပါသည်</p>
         </div>
       </div>
     </div>
@@ -10665,7 +10643,7 @@ function createCDEventElements() {
     }
     
     .cd-option:hover {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
       border-color: gold !important;
       box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3) !important;
     }
@@ -10694,6 +10672,8 @@ function createCDEventElements() {
   `;
   document.head.appendChild(style);
 }
+
+// ကျန်တဲ့ function တွေက အတူတူပါပဲ၊ အောက်မှာ ဆက်ရေးထားတယ်...
 
 // CD Event System ကို စတင်မယ်
 function initializeCDEvent() {
@@ -10891,37 +10871,29 @@ function setupCDEventListeners() {
 function updateCDSelectionScreen() {
   // CD 1 အတွက်
   const cd1Status = document.getElementById('cd1-status');
-  if (cd1Status) {
-    if (purchasedCDs.includes(1)) {
-      cd1Status.innerHTML = `<p style="font-size:12px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
-    }
+  if (cd1Status && purchasedCDs.includes(1)) {
+    cd1Status.innerHTML = `<p style="font-size:11px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
   }
   
   // CD 2 အတွက်
   const cd2Status = document.getElementById('cd2-status');
-  if (cd2Status) {
-    if (purchasedCDs.includes(2)) {
-      cd2Status.innerHTML = `<p style="font-size:12px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
-      // Button ကိုလည်း ပြောင်းမယ်
-      const cd2Button = document.querySelector('.select-cd-btn[data-cd="2"]');
-      if (cd2Button) {
-        cd2Button.textContent = 'သုံးမည်';
-        cd2Button.style.background = '#28a745';
-      }
+  if (cd2Status && purchasedCDs.includes(2)) {
+    cd2Status.innerHTML = `<p style="font-size:11px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
+    const cd2Button = document.querySelector('.select-cd-btn[data-cd="2"]');
+    if (cd2Button) {
+      cd2Button.textContent = 'သုံးမည်';
+      cd2Button.style.background = '#28a745';
     }
   }
   
   // CD 3 အတွက်
   const cd3Status = document.getElementById('cd3-status');
-  if (cd3Status) {
-    if (purchasedCDs.includes(3)) {
-      cd3Status.innerHTML = `<p style="font-size:12px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
-      // Button ကိုလည်း ပြောင်းမယ်
-      const cd3Button = document.querySelector('.select-cd-btn[data-cd="3"]');
-      if (cd3Button) {
-        cd3Button.textContent = 'သုံးမည်';
-        cd3Button.style.background = '#28a745';
-      }
+  if (cd3Status && purchasedCDs.includes(3)) {
+    cd3Status.innerHTML = `<p style="font-size:11px; margin:0; color:#90ee90;">✓ ဝယ်ပြီးပါပြီ</p>`;
+    const cd3Button = document.querySelector('.select-cd-btn[data-cd="3"]');
+    if (cd3Button) {
+      cd3Button.textContent = 'သုံးမည်';
+      cd3Button.style.background = '#28a745';
     }
   }
 }
@@ -11268,9 +11240,6 @@ function playCDMusic() {
   cdMusic.loop = true;
   cdMusic.volume = 0.5;
   
-  // Error handling ထည့်မယ်
-  handleAudioError(cdMusic, currentCD);
-  
   // MP3 ဖိုင်ဖွင့်တဲ့အခါ
   cdMusic.addEventListener('canplaythrough', () => {
     console.log(`✅ CD ${currentCD} MP3 ဖိုင်ကို ဖွင့်နိုင်ပါပြီ`);
@@ -11299,9 +11268,6 @@ function playCDMusic() {
     if (musicError) {
       musicError.style.display = 'block';
     }
-    
-    // Alternative source ကိုကြိုးစားကြည့်မယ်
-    tryAlternativeMusicSource(currentCD);
   });
   
   // ဂီတဖွင့်ကြည့်မယ်
@@ -11317,44 +11283,6 @@ function playCDMusic() {
       }
     }
   });
-}
-
-// Alternative music source ကိုကြိုးစားကြည့်မယ်
-function tryAlternativeMusicSource(cdNumber) {
-  const alternatives = {
-    1: [
-      "https://starlar1.github.io/Event1/cd1.mp3",
-      "https://starlar1.github.io/Event1/CD1.mp3",
-      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd1.mp3"
-    ],
-    2: [
-      "https://starlar1.github.io/Event1/cd2.mp3",
-      "https://starlar1.github.io/Event1/CD2.mp3",
-      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd2.mp3"
-    ],
-    3: [
-      "https://starlar1.github.io/Event1/cd3.mp3",
-      "https://starlar1.github.io/Event1/CD3.mp3",
-      "https://raw.githubusercontent.com/Starlar1/Event1/main/cd3.mp3"
-    ]
-  };
-  
-  console.log(`🔄 CD ${cdNumber} အတွက် alternative MP3 sources ကိုကြိုးစားကြည့်နေပါတယ်...`);
-  
-  // လက်ရှိ CD_CONFIG ကို alternative sources နဲ့ update လုပ်မယ်
-  const altSources = alternatives[cdNumber];
-  if (altSources && altSources.length > 0) {
-    // ပထမဆုံး alternative ကိုသုံးမယ်
-    CD_CONFIG[cdNumber].music = altSources[0];
-    console.log(`🔄 CD ${cdNumber} MP3 source ကို alternative သို့ပြောင်းလိုက်ပါပြီ: ${altSources[0]}`);
-    
-    // MP3 ပြန်ဖွင့်ကြည့်မယ်
-    if (cdMusic) {
-      cdMusic.src = altSources[0];
-      cdMusic.load();
-      cdMusic.play().catch(e => console.log('Alternative source ဖွင့်ရာတွင် ပြဿနာရှိ:', e));
-    }
-  }
 }
 
 // CD ဂီတကိုရပ်မယ်
@@ -11432,7 +11360,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initializeCDEvent();
   modifyEventsBackButton();
   
-  // MP3 files တွေကို preload လုပ်မယ် (optional)
+  // MP3 files တွေကို preload လုပ်မယ်
   console.log("🎵 MP3 Files တွေကို ကြိုတင်ဖွင့်နေပါတယ်...");
   setTimeout(() => {
     for (let i = 1; i <= 3; i++) {
