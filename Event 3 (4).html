@@ -1,0 +1,502 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game UI</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    font-family: Arial, sans-serif;
+}
+
+.game-container{
+    width:100%;
+    height:100%;
+    position:relative;
+}
+
+/* Full background */
+.background{
+    width:100%;
+    height:100%;
+    background:url("https://i.ibb.co/3nXmspD/In-Shot-20251201-103839768.jpg") center no-repeat;
+    background-size:cover;
+    position:relative;
+}
+
+/* Common resource style */
+.resource{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.resource img{
+    width:32px;
+    height:32px;
+    object-fit:contain;
+}
+
+.resource span{
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
+}
+
+/* ===== Token + Coin Box ===== */
+.resource-box-top{
+    position:absolute;
+    top:8px;
+    left:12px;
+    background:rgba(0,0,0,0.6);
+    border-radius:16px;
+    padding:8px 12px;
+    backdrop-filter:blur(7px);
+    display:flex;
+    gap:14px;
+}
+
+/* ===== Crystal Box (separate background) ===== */
+.resource-box-crystal{
+    position:absolute;
+    top:58px;          /* Token/Coin အောက် */
+    left:12px;
+    background:rgba(20, 40, 80, 0.7); /* Crystal သီးသန့်အခံ */
+    border-radius:14px;
+    padding:8px 12px;
+    backdrop-filter:blur(7px);
+}
+
+/* ===== Sidebar Menu Styles ===== */
+.sidebar-menu {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    transition: all 0.4s ease;
+}
+
+/* Sidebar Toggle (open button) */
+.sidebar-toggle {
+    width: 28px;
+    height: 80px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 14px 0 0 14px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 5px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    box-shadow: -3px 3px 10px rgba(0, 0, 0, 0.6);
+}
+
+.sidebar-toggle:hover {
+    background: rgba(35, 35, 35, 0.9);
+    border-color: rgba(0, 0, 0, 0.8);
+    width: 30px;
+}
+
+.sidebar-toggle span {
+    width: 16px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-toggle.active {
+    background: rgba(50, 50, 50, 0.9);
+    border-color: rgba(0, 0, 0, 0.8);
+}
+
+.sidebar-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 4px);
+}
+.sidebar-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+.sidebar-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -4px);
+}
+
+/* Sidebar Buttons Container */
+.sidebar-buttons {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(5,5,5,0.95), rgba(15,15,15,0.85));
+    padding: 18px;
+    border-radius: 18px 0 0 18px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    margin-right: -8px;
+    animation: slideIn 0.35s ease;
+    box-shadow: -5px 5px 25px rgba(0,0,0,0.7);
+}
+
+.sidebar-buttons.show {
+    display: flex;
+}
+
+/* Slide animation */
+@keyframes slideIn {
+    from { 
+        opacity: 0;
+        transform: translateX(25px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Sidebar Button */
+.sidebar-btn {
+    padding: 14px 22px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(145deg, rgba(0,90,255,0.85), rgba(0,60,180,0.8));
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    min-width: 150px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 100, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 100, 255, 0.3);
+}
+
+.sidebar-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.sidebar-btn:hover::before {
+    left: 100%;
+}
+
+.sidebar-btn:hover {
+    background: linear-gradient(145deg, rgba(0,100,255,0.95), rgba(0,70,200,0.9));
+    transform: translateX(-5px);
+    box-shadow: -2px 2px 20px rgba(0,120,255,0.5);
+}
+
+.sidebar-btn:active {
+    background: rgba(0,80,200,0.9);
+    transform: translateX(-3px);
+}
+
+.sidebar-btn:disabled {
+    background: rgba(0,0,0,0.2);
+    color: rgba(255,255,255,0.6);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(255,255,255,0.1);
+}
+
+.sidebar-btn:disabled:hover::before {
+    left: -100%;
+}
+
+/* Mobile adjust */
+@media (max-width:600px){
+    .resource img{
+        width:28px;
+        height:28px;
+    }
+    .resource span{
+        font-size:16px;
+    }
+    
+    /* Sidebar Responsive */
+    .sidebar-btn {
+        min-width: 125px;
+        padding: 11px 16px;
+        font-size: 13px;
+    }
+
+    .sidebar-buttons {
+        padding: 14px;
+    }
+
+    .sidebar-toggle {
+        height: 65px;
+        width: 25px;
+    }
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+/* Full Screen Loading Image */
+.loading-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Bigger Circle at Bottom */
+.loading-circle {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #2196F3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* Bigger Enter Button (Initially hidden) */
+.enter-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 14px 35px; /* Bigger padding */
+    font-size: 18px;    /* Bigger font */
+    font-weight: bold;
+    background: linear-gradient(145deg, #2196F3, #0D47A1);
+    color: white;
+    border: none;
+    border-radius: 30px; /* Bigger radius */
+    cursor: pointer;
+    display: none;
+    box-shadow: 0 5px 20px rgba(33, 150, 243, 0.5);
+    white-space: nowrap;
+    min-width: 150px; /* Minimum width */
+}
+
+.enter-btn.show {
+    display: block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+.enter-btn:hover {
+    background: linear-gradient(145deg, #1E88E5, #0D47A1);
+    transform: translateX(-50%) scale(1.07);
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .loading-circle {
+        width: 50px;
+        height: 50px;
+        border-width: 3px;
+    }
+    
+    .enter-btn {
+        padding: 12px 28px;
+        font-size: 16px;
+        min-width: 130px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loading-screen">
+    <img class="loading-image" id="loading-image" src="" alt="Loading Image">
+    <div class="loading-circle" id="loading-circle"></div>
+    <button class="enter-btn" id="enter-btn">
+        ၀င်ရောက်မည်
+    </button>
+</div>
+
+<div class="game-container" id="game-container" style="display:none;">
+
+<div class="game-container">
+    <div class="background">
+
+        <!-- Token & Coin -->
+        <div class="resource-box-top">
+            <div class="resource">
+                <img src="https://i.ibb.co/YTbp2Z70/Grid-Art-20251201-170338013.png">
+                <span id="token-count">0</span>
+            </div>
+
+            <div class="resource">
+                <img src="https://i.ibb.co/K1PkzXn/Grid-Art-20251201-165223815.png">
+                <span id="coin-count">0</span>
+            </div>
+        </div>
+
+        <!-- Crystal (separate background) -->
+        <div class="resource-box-crystal">
+            <div class="resource">
+                <img src="https://i.ibb.co/qMrrdSPm/Grid-Art-20251018-170713563.png">
+                <span id="crystal-count">0</span>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <div class="sidebar-menu">
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="sidebar-buttons" id="sidebar-buttons">
+                <button class="sidebar-btn" id="event-btn">
+                    <span>Coins Box</span>
+                </button>
+                <button class="sidebar-btn" id="task-btn">
+                    <span>Task များ</span>
+                </button>
+                <button class="sidebar-btn" id="exchange-btn">
+                    <span>လဲမည်</span>
+                </button>
+                <button class="sidebar-btn" id="battle-btn">
+                    <span>Token Box</span>
+                </button>
+                <button class="sidebar-btn" id="lucky-draw-btn">
+                    <span>Lucky Draw</span>
+                </button>
+                <button class="sidebar-btn" id="gift-code-btn">
+                    <span>Gift Code</span>
+                </button>
+                <button class="sidebar-btn" id="rank-btn">
+                    <span>Rankings</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Sidebar Toggle Functionality
+const menuToggle = document.getElementById('sidebar-toggle');
+const menuButtons = document.getElementById('sidebar-buttons');
+const menuContainer = document.querySelector('.sidebar-menu');
+
+menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menuButtons.classList.toggle('show');
+    
+    // Toggle active class for animation
+    if (menuButtons.classList.contains('show')) {
+        menuToggle.classList.add('active');
+    } else {
+        menuToggle.classList.remove('active');
+    }
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!menuContainer.contains(e.target) && menuButtons.classList.contains('show')) {
+        menuButtons.classList.remove('show');
+        menuToggle.classList.remove('active');
+    }
+});
+
+// Prevent menu from closing when clicking inside menu buttons
+menuButtons.addEventListener('click', (e) => {
+    e.stopPropagation();
+});
+
+// Sample button click events (you can customize these)
+document.querySelectorAll('.sidebar-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const buttonText = this.querySelector('span').textContent;
+        alert(`Clicked: ${buttonText}`);
+        // You can add your own navigation logic here
+    });
+});
+
+// Random Loading Images Array
+const loadingImages = [
+    "https://i.ibb.co/zTz4HWKV/Grid-Art-20251201-174500600.jpg",
+    "https://i.ibb.co/tS8x1NN/Grid-Art-20251201-174440283.jpg",
+    "https://i.ibb.co/5WHvk572/Grid-Art-20251201-174349581.jpg",
+    "https://i.ibb.co/x8FNdDqn/Grid-Art-20251201-173834315.jpg",
+    "https://i.ibb.co/fzYkY1Zg/Grid-Art-20251201-173744578.jpg",
+    "https://i.ibb.co/fV9d8pvc/Grid-Art-20251201-173622305.jpg",
+    "https://i.ibb.co/NdFnnmWM/Grid-Art-20251201-173705204.jpg",
+    "https://i.ibb.co/5gW6qxFM/Grid-Art-20251201-173540051.jpg"
+];
+
+// Loading Screen Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const gameContainer = document.getElementById('game-container');
+    const loadingImage = document.getElementById('loading-image');
+    const loadingCircle = document.getElementById('loading-circle');
+    const enterBtn = document.getElementById('enter-btn');
+    
+    // Select random loading image
+    const randomIndex = Math.floor(Math.random() * loadingImages.length);
+    loadingImage.src = loadingImages[randomIndex];
+    
+    // Wait for 3 seconds then show enter button
+    setTimeout(() => {
+        // Hide loading circle
+        loadingCircle.style.display = 'none';
+        
+        // Show enter button
+        enterBtn.classList.add('show');
+    }, 3000);
+    
+    // Enter button click handler
+    enterBtn.addEventListener('click', function() {
+        // Hide loading screen immediately
+        loadingScreen.style.display = 'none';
+        gameContainer.style.display = 'block';
+    });
+});
+
+
+</script>
+</body>
+</html>
